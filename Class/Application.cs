@@ -52,8 +52,17 @@ namespace ConsoleOOPShopCSharp.Class
             switch(SelectedNum)
             {
                 case 1:
-                    Product test = new Product();
-                    test.CreateProduct();
+                    Product new1 = new Product();
+                    new1.CreateProduct();
+                break;
+
+                case 2:
+                    Category new2 = new Category();
+                    new2.createCategory();
+                break;
+
+                case 3:
+
                 break;
             }
 
