@@ -10,6 +10,7 @@ namespace ConsoleOOPShopCSharp.Class
     public class Application
     {
         public bool isStart = false;
+        Assortment assortment = new Assortment();
         public void Start()
         {
             isStart = true;
@@ -33,9 +34,9 @@ namespace ConsoleOOPShopCSharp.Class
             printLine();
             Console.WriteLine("4. Remove Category");
             printLine();
-            Console.WriteLine("5. Show Product");
+            Console.WriteLine("5. Show Products");
             printLine();
-            Console.WriteLine("6. Show Category");
+            Console.WriteLine("6. Show Categories");
             printLine();
             Console.WriteLine("7. Filter Products");
             printLine();
@@ -51,19 +52,43 @@ namespace ConsoleOOPShopCSharp.Class
             if (SelectedNum < 0 || SelectedNum > 8) Console.WriteLine("Please choose a number from 0 to 8");
             switch(SelectedNum)
             {
+                case 0: isStart = false; break;
                 case 1:
-                    Product new1 = new Product();
-                    new1.CreateProduct();
-                break;
+                    assortment.printAssortment();
+                    Console.WriteLine("Where to add: ");
+                    int index = int.Parse(Console.ReadLine());
+                    Product p = new Product();
+                    p.CreateProduct();
+                    assortment.categories[index-1].addProduct(p);
+                    break;
 
                 case 2:
-                    Category new2 = new Category();
-                    new2.createCategory();
-                break;
+                    Category c = new Category();
+                    c.createCategory();
+                    assortment.addCategory(c);
+                    break;
 
                 case 3:
-
-                break;
+                    assortment.printAssortment();
+                    Console.WriteLine("Where to delete: ");
+                    index = int.Parse(Console.ReadLine());
+                    assortment.categories[index-1].removeProduct();
+                    break;
+                case 4:
+                    assortment.printAssortment();
+                    Console.WriteLine("What to delete: ");
+                    index = int.Parse(Console.ReadLine());
+                    assortment.removeCategory(index - 1);
+                    break;
+                case 5:
+                    assortment.printAssortment();
+                    Console.WriteLine("What category: ");
+                    index = int.Parse(Console.ReadLine());
+                    assortment.categories[index - 1].printCategory();
+                    break;
+                case 6:
+                    assortment.printAssortment();
+                    break;
             }
 
         }

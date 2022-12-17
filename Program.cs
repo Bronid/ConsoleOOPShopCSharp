@@ -7,9 +7,7 @@ namespace ConsoleOOPShopCSharp
     {
         static void Main(string[] args)
         {
-            Assortment assortment = new Assortment();
             Application application = new Application();
-
             application.Start();
             while (application.isStart)
             {

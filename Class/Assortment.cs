@@ -8,7 +8,7 @@ namespace ConsoleOOPShopCSharp.Class
 {
     public class Assortment : Category
     {
-        private List<Category> categories = new List<Category>();
+        public List<Category> categories = new List<Category>();
         
         public Assortment()
         {
@@ -16,6 +16,11 @@ namespace ConsoleOOPShopCSharp.Class
         public void addCategory(Category c)
         {
             categories.Add(c);
+        }
+
+        public void removeCategory(int index)
+        {
+            categories.RemoveAt(index);
         }
 
         public void printAssortment()

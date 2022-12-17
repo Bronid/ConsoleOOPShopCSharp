@@ -25,6 +25,7 @@ namespace ConsoleOOPShopCSharp.Class
             this.categoryName = Console.ReadLine();
             Console.WriteLine($"New category {this.categoryName} added! :3");
         }
+        new public void Print() => Console.WriteLine($"Name: {categoryName}");
 
         public void addProduct(Product a)
         {
@@ -39,6 +40,14 @@ namespace ConsoleOOPShopCSharp.Class
                 Console.Write(i+1 + ". ");
                 products[i].Print();
             }
+        }
+
+        public void removeProduct()
+        {
+            printCategory();
+            Console.WriteLine("What to delete: ");
+            int index = int.Parse(Console.ReadLine());
+            products.RemoveAt(index-1);
         }
 
     }
