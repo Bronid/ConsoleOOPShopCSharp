@@ -8,19 +8,19 @@ namespace ConsoleOOPShopCSharp.Class
 {
         public class Product
         {
-            private string name = "";
-            private float price = 0;
+            private string productName = "";
+            private float productPrice = 0;
 
             public Product()
             {
             }
-            public Product(string name, float price)
+            public Product(string productName, float productPrice)
             {
-                this.name = name;
-                this.price = price;
+                this.productName = productName;
+                this.productPrice = productPrice;
             }
 
-            public void Print() => Console.WriteLine($"Name: {name}  Price: {price}");
+            public void Print() => Console.WriteLine($"Name: {productName}  Price: {productPrice}");
 
 
         }
