@@ -1,5 +1,6 @@
 ﻿using ConsoleOOPShopCSharp.Class;
 
+//test
 namespace ConsoleOOPShopCSharp
 {
     internal class Program
