@@ -22,6 +22,14 @@ namespace ConsoleOOPShopCSharp.Class
 
             public void Print() => Console.WriteLine($"Name: {productName}  Price: {productPrice}");
 
+            public void CreateProduct()
+            {
+                Console.WriteLine("Please write the name of new product");
+                this.productName = Console.ReadLine();
+                Console.WriteLine("Please write the price of new product");
+                this.productPrice = float.Parse(Console.ReadLine());
+                Console.WriteLine($"New product {this.productName} : {this.productPrice} added! :3");
+            }
 
         }
 }

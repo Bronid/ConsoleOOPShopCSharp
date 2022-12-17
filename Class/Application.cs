@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleOOPShopCSharp.Class;
 
 namespace ConsoleOOPShopCSharp.Class
 {
@@ -38,7 +39,22 @@ namespace ConsoleOOPShopCSharp.Class
             printLine();
             Console.WriteLine("8. Filter Categories");
             printLine();
-            Console.WriteLine("0. EXIT");
+            Console.WriteLine("0. EXIT\n");
+            Console.WriteLine("Please choose a number from 0 to 8");
+        }
+
+        public void Select()
+        {
+            int SelectedNum = int.Parse(Console.ReadLine());
+            if (SelectedNum < 0 || SelectedNum > 8) Console.WriteLine("Please choose a number from 0 to 8");
+            switch(SelectedNum)
+            {
+                case 1:
+                    Product test = new Product();
+                    test.CreateProduct();
+                break;
+            }
+
         }
     }
 }
