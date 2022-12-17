@@ -19,7 +19,6 @@ namespace ConsoleOOPShopCSharp.Class
             this.categoryName = categoryName;
         }
 
-
         void addProduct(Product a)
         {
             products.Add(a);
@@ -33,6 +32,5 @@ namespace ConsoleOOPShopCSharp.Class
                 products[i].Print();
             }
         }
-
     }
 }
