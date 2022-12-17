@@ -44,6 +44,7 @@ namespace ConsoleOOPShopCSharp.Class
 
         public void removeProduct()
         {
+
             if (products.Count <= 0)
             {
                 Console.WriteLine("We have nothing to delete, first you need to add products!");
@@ -54,6 +55,7 @@ namespace ConsoleOOPShopCSharp.Class
             int index = NumTester(Console.ReadLine());
             if (index == -404) return;
             products.RemoveAt(index - 1);
+
         }
 
     }

@@ -72,8 +72,9 @@ namespace ConsoleOOPShopCSharp.Class
             int index = -1;
             switch (SelectedNum)
             {
-                case -1: break;
+
                 case 0: isStart = false; break;
+                
                 case 1:
                     if (assortment.categories.Count <= 0)
                     {
@@ -99,6 +100,8 @@ namespace ConsoleOOPShopCSharp.Class
                     c.createCategory();
                     assortment.addCategory(c);
                     break;
+                    
+                case 3:
                     assortment.printAssortment();
                     Console.WriteLine("Where to delete: ");
                     index = NumTester(Console.ReadLine());
@@ -109,8 +112,8 @@ namespace ConsoleOOPShopCSharp.Class
                         break;
                     }
                     assortment.categories[index - 1].removeProduct();
-
                     break;
+                    
                 case 4:
                     if (assortment.categories.Count <= 0)
                     {
@@ -127,6 +130,7 @@ namespace ConsoleOOPShopCSharp.Class
                     }
                     assortment.removeCategory(index - 1);
                     break;
+                    
                 case 5:
                     if (assortment.categories.Count <= 0)
                     {
@@ -144,6 +148,7 @@ namespace ConsoleOOPShopCSharp.Class
                     }
                     assortment.categories[index - 1].printCategory();
                     break;
+                    
                 case 6:
                     if (assortment.categories.Count <= 0)
                     {
