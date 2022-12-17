@@ -8,7 +8,7 @@ namespace ConsoleOOPShopCSharp.Class
 {
     public class Assortment : Category
     {
-        private List<Category> categories = new List<Category>();
+        public List<Category> categories = new List<Category>();
         
         public Assortment()
         {
