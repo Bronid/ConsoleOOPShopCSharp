@@ -1,5 +1,4 @@
 ﻿using ConsoleOOPShopCSharp.Class;
-using ConsoleOOPShopCSharp.Class.ConsoleOOPShopCSharp.Class;
 
 namespace ConsoleOOPShopCSharp
 {

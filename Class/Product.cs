@@ -6,14 +6,6 @@ using System.Threading.Tasks;
 
 namespace ConsoleOOPShopCSharp.Class
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
-    namespace ConsoleOOPShopCSharp.Class
-    {
         public class Product
         {
             private string name = "";
@@ -32,5 +24,4 @@ namespace ConsoleOOPShopCSharp.Class
 
 
         }
-    }
 }
