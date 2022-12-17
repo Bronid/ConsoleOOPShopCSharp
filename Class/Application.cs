@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleOOPShopCSharp.Class
 {
-    internal class Application
+    public class Application
     {
-        void Start()
+        public void Start()
         {
             Console.WriteLine("Welcome to ConsoleShopApplication!");
             //There are we need add init functions
@@ -33,7 +33,12 @@ namespace ConsoleOOPShopCSharp.Class
             Console.WriteLine("5. Show Product");
             printLine();
             Console.WriteLine("6. Show Category");
-
+            printLine();
+            Console.WriteLine("7. Filter Products");
+            printLine();
+            Console.WriteLine("8. Filter Categories");
+            printLine();
+            Console.WriteLine("0. EXIT");
         }
     }
 }
