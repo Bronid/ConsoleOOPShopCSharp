@@ -6,7 +6,28 @@ using System.Threading.Tasks;
 
 namespace ConsoleOOPShopCSharp.Class
 {
-    internal class Assortment
+    public class Assortment : Category
     {
+        private List<Category> categories = new List<Category>();
+        
+        public Assortment()
+        {
+
+        }
+        public void addCategory(Category c)
+        {
+            categories.Add(c);
+        }
+
+        public void printAssortment()
+        {
+            Console.WriteLine($"Assortment:");
+            for (int i = 0; i < categories.Count; i++)
+            {
+                Console.Write(i + 1 + ". ");
+                categories[i].Print();
+            }
+        }
+
     }
 }
