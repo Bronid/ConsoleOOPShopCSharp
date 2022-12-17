@@ -34,20 +34,28 @@ namespace ConsoleOOPShopCSharp.Class
 
         public void printCategory()
         {
-            Console.WriteLine($"List of {categoryName}");
+            Console.WriteLine($"List of {categoryName}:");
             for (int i = 0; i < products.Count; i++)
             {
-                Console.Write(i+1 + ". ");
+                Console.Write(i + 1 + ". ");
                 products[i].Print();
             }
         }
 
         public void removeProduct()
         {
+
+            if (products.Count <= 0)
+            {
+                Console.WriteLine("We have nothing to delete, first you need to add products!");
+                return;
+            }
             printCategory();
             Console.WriteLine("What to delete: ");
-            int index = int.Parse(Console.ReadLine());
-            products.RemoveAt(index-1);
+            int index = NumTester(Console.ReadLine());
+            if (index == -404) return;
+            products.RemoveAt(index - 1);
+
         }
 
     }

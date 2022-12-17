@@ -9,7 +9,7 @@ namespace ConsoleOOPShopCSharp.Class
     public class Assortment : Category
     {
         public List<Category> categories = new List<Category>();
-        
+
         public Assortment()
         {
         }
