@@ -11,8 +11,11 @@ namespace ConsoleOOPShopCSharp
             Application application = new Application();
 
             application.Start();
-            application.ShowMenu();
-            application.Select();
+            while (application.isStart)
+            {
+                application.ShowMenu();
+                application.Select();
+            }
         }
     }
 }

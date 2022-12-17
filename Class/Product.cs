@@ -28,7 +28,7 @@ namespace ConsoleOOPShopCSharp.Class
                 this.productName = Console.ReadLine();
                 Console.WriteLine("Please write the price of new product");
                 this.productPrice = float.Parse(Console.ReadLine());
-                Console.WriteLine($"New product {this.productName} : {this.productPrice} added! :3");
+                Console.WriteLine($"New product {this.productName} with price {this.productPrice}zl added! :3");
             }
 
         }

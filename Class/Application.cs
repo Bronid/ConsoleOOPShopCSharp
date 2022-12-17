@@ -9,8 +9,10 @@ namespace ConsoleOOPShopCSharp.Class
 {
     public class Application
     {
+        public bool isStart = false;
         public void Start()
         {
+            isStart = true;
             Console.WriteLine("Welcome to ConsoleShopApplication!");
             //There are we need add init functions
         }
