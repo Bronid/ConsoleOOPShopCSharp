@@ -11,13 +11,17 @@ namespace ConsoleOOPShopCSharp.Class
 {
     public class Application
     {
+        string connectionString = "Data Source=database.db; Version=3; New=True; Compress=True;";
         public bool isStart = false;
         Assortment assortment = new Assortment();
         public void Start()
         {
             isStart = true;
+            Database db = new Database(connectionString);
+            db.Connect();
+            db.executeQuery("CREATE TABLE Products (productId INTEGER PRIMARY KEY, productName TEXT, productPrice REAL, categoryId INTEGER)");
+            db.executeQuery("CREATE TABLE Categories (categoryId INTEGER PRIMARY KEY, categoryName TEXT)");
             Console.WriteLine("Welcome to ConsoleShopApplication!");
-            //There are we need add init functions
         }
 
         internal void printLine()

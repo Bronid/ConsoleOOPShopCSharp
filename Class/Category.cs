@@ -11,7 +11,6 @@ namespace ConsoleOOPShopCSharp.Class
         private string categoryName = "";
         private List<Product> products = new List<Product>();
 
-
         public Category()
         {
         }

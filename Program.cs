@@ -1,7 +1,5 @@
 ﻿using ConsoleOOPShopCSharp.Class;
-using System.Data.SQLite;
 
-//test
 namespace ConsoleOOPShopCSharp
 {
     internal class Program
