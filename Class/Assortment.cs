@@ -9,13 +9,18 @@ namespace ConsoleOOPShopCSharp.Class
     public class Assortment : Category
     {
         public List<Category> categories = new List<Category>();
-        
+
         public Assortment()
         {
         }
         public void addCategory(Category c)
         {
             categories.Add(c);
+        }
+
+        public void removeCategory(int index)
+        {
+            categories.RemoveAt(index);
         }
 
         public void printAssortment()
