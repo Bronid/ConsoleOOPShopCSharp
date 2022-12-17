@@ -14,11 +14,11 @@ namespace ConsoleOOPShopCSharp.Class
             //There are we need add init functions
         }
 
-        void printLine()
+        internal void printLine()
         {
             Console.WriteLine("-------------------------------------------");
         }
-        void ShowMenu()
+        public void ShowMenu()
         {
             Console.WriteLine("Options: ");
             printLine();

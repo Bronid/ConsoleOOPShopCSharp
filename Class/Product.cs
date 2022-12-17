@@ -20,7 +20,7 @@ namespace ConsoleOOPShopCSharp.Class
                 this.productPrice = productPrice;
             }
 
-            public void Print() => Console.WriteLine($"Name: {productName}  Price: {productPrice}");
+            public void Print() => Console.WriteLine($"Name: {productName}  Price: {productPrice}\n");
 
 
         }

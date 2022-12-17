@@ -8,11 +8,15 @@ namespace ConsoleOOPShopCSharp
         static void Main(string[] args)
         {
             Application application = new Application();
-            Product a = new Product("Test", 12.4f);
-            Product b = new Product();
-            a.Print();
-            b.Print();
-            Console.WriteLine("Hello, World!");
+            Product p = new Product("Coca-Cola", 9.50f);
+            Product p2 = new Product("Sprite", 9);
+            Category drinks = new Category("Drinks");
+            drinks.addProduct(p);
+            drinks.addProduct(p2);
+            drinks.printCategory();
+
+            application.Start();
+            application.ShowMenu();
         }
     }
 }

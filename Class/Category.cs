@@ -20,16 +20,17 @@ namespace ConsoleOOPShopCSharp.Class
             this.categoryName = categoryName;
         }
 
-        void addProduct(Product a)
+        public void addProduct(Product a)
         {
             products.Add(a);
         }
 
-        void printCategory()
+        public void printCategory()
         {
+            Console.WriteLine($"List of {categoryName}:");
             for (int i = 0; i < products.Count; i++)
             {
-                Console.WriteLine(i + ". ");
+                Console.Write(i+1 + ". ");
                 products[i].Print();
             }
         }
