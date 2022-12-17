@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +10,7 @@ namespace ConsoleOOPShopCSharp.Class
     {
         private string categoryName = "";
         private List<Product> products = new List<Product>();
+
 
         public Category()
         {
@@ -32,5 +33,6 @@ namespace ConsoleOOPShopCSharp.Class
                 products[i].Print();
             }
         }
+
     }
 }
