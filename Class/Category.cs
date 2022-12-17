@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace ConsoleOOPShopCSharp.Class
 {
-    internal class Category
+    public class Category : Product
     {
+        private string categoryName = "";
+        List<Product> products = new List<Product>();
+
+        public Category()
+        {
+        }
+        public Category(string categoryName)
+        {
+            this.categoryName = categoryName;
+        }
     }
 }
