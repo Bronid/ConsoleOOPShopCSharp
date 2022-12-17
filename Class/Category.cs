@@ -24,12 +24,14 @@ namespace ConsoleOOPShopCSharp.Class
             products.Add(a);
         }
 
+        new public void Print() => Console.WriteLine($"Name: {categoryName}");
+
         public void printCategory()
         {
             Console.WriteLine($"List of {categoryName}:");
             for (int i = 0; i < products.Count; i++)
             {
-                Console.Write(i+1 + ". ");
+                Console.Write("\n" + (i+1) + ". ");
                 products[i].Print();
             }
         }

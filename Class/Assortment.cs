@@ -12,7 +12,6 @@ namespace ConsoleOOPShopCSharp.Class
         
         public Assortment()
         {
-
         }
         public void addCategory(Category c)
         {
@@ -21,10 +20,10 @@ namespace ConsoleOOPShopCSharp.Class
 
         public void printAssortment()
         {
-            Console.WriteLine($"Assortment:");
+            Console.WriteLine("\nAssortment:");
             for (int i = 0; i < categories.Count; i++)
             {
-                Console.Write(i + 1 + ". ");
+                Console.Write("\n" + (i + 1) + ". ");
                 categories[i].Print();
             }
         }
