@@ -11,6 +11,7 @@ namespace ConsoleOOPShopCSharp.Class
         private string categoryName = "";
         private List<Product> products = new List<Product>();
 
+
         public Category()
         {
         }
@@ -18,20 +19,24 @@ namespace ConsoleOOPShopCSharp.Class
         {
             this.categoryName = categoryName;
         }
+        public void createCategory()
+        {
+            Console.WriteLine("Please write the name of new category");
+            this.categoryName = Console.ReadLine();
+            Console.WriteLine($"New category {this.categoryName} added! :3");
+        }
 
         public void addProduct(Product a)
         {
             products.Add(a);
         }
 
-        new public void Print() => Console.WriteLine($"Name: {categoryName}");
-
         public void printCategory()
         {
-            Console.WriteLine($"List of {categoryName}:");
+            Console.WriteLine($"List of {categoryName}");
             for (int i = 0; i < products.Count; i++)
             {
-                Console.Write("\n" + (i+1) + ". ");
+                Console.Write(i+1 + ". ");
                 products[i].Print();
             }
         }
