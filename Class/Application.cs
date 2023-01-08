@@ -19,8 +19,8 @@ namespace ConsoleOOPShopCSharp.Class
             isStart = true;
             Database db = new Database(connectionString);
             db.Connect();
-            db.executeQuery("CREATE TABLE Products (productId INTEGER PRIMARY KEY, productName TEXT, productPrice REAL, categoryId INTEGER)");
-            db.executeQuery("CREATE TABLE Categories (categoryId INTEGER PRIMARY KEY, categoryName TEXT)");
+            //db.executeQuery("CREATE TABLE Products (productId INTEGER PRIMARY KEY, productName TEXT, productPrice REAL, categoryId INTEGER)");
+            //db.executeQuery("CREATE TABLE Categories (categoryId INTEGER PRIMARY KEY, categoryName TEXT)");
             Console.WriteLine("Welcome to ConsoleShopApplication!");
         }
 
@@ -77,9 +77,10 @@ namespace ConsoleOOPShopCSharp.Class
             switch (SelectedNum)
             {
 
-                case 0: isStart = false; break;
+                case 0: Console.Clear(); isStart = false; break;
                 
                 case 1:
+                    Console.Clear();
                     if (assortment.categories.Count <= 0)
                     {
                         Console.WriteLine("First you need to add category!");
@@ -100,12 +101,14 @@ namespace ConsoleOOPShopCSharp.Class
                     break;
 
                 case 2:
+                    Console.Clear();
                     Category c = new Category();
                     c.createCategory();
                     assortment.addCategory(c);
                     break;
                     
                 case 3:
+                    Console.Clear();
                     assortment.printAssortment();
                     Console.WriteLine("Where to delete: ");
                     index = NumTester(Console.ReadLine());
@@ -119,6 +122,7 @@ namespace ConsoleOOPShopCSharp.Class
                     break;
                     
                 case 4:
+                    Console.Clear();
                     if (assortment.categories.Count <= 0)
                     {
                         Console.WriteLine("We have nothing to delete, first you need to add category!");
@@ -136,6 +140,7 @@ namespace ConsoleOOPShopCSharp.Class
                     break;
                     
                 case 5:
+                    Console.Clear();
                     if (assortment.categories.Count <= 0)
                     {
                         Console.WriteLine("We have nothing to show you, first you need to add category!");
@@ -154,6 +159,7 @@ namespace ConsoleOOPShopCSharp.Class
                     break;
                     
                 case 6:
+                    Console.Clear();
                     if (assortment.categories.Count <= 0)
                     {
                         Console.WriteLine("We have nothing to show you, first you need to add category!");
