@@ -6,24 +6,19 @@ using System.Threading.Tasks;
 
 namespace ConsoleOOPShopCSharp.Class
 {
-    public class Assortment : Category
+    public class Assortment : ISpacious<Category>
     {
         public List<Category> categories = new List<Category>();
 
         public Assortment()
         {
         }
-        public void addCategory(Category c)
-        {
-            categories.Add(c);
-        }
 
-        public void removeCategory(int index)
-        {
-            categories.RemoveAt(index);
-        }
+        public void Add(Category c) => categories.Add(c);
 
-        public void printAssortment()
+        public void Remove(int index) => categories.RemoveAt(index);
+
+        public void PrintListInfo()
         {
             Console.WriteLine("\nAssortment:");
             for (int i = 0; i < categories.Count; i++)
