@@ -11,6 +11,7 @@ namespace ConsoleOOPShopCSharp.Class
 {
     public class Application
     {
+        ExceptionHelper e = new ExceptionHelper();
         string connectionString = "Data Source=database.db; Version=3; New=True; Compress=True;";
         public bool isStart = false;
         Assortment assortment = new Assortment();
@@ -52,26 +53,11 @@ namespace ConsoleOOPShopCSharp.Class
             Console.WriteLine("Please choose a number:");
         }
 
-        public int NumTester(string ForTest)
-        {
-            int index = 0;
-            try
-            {
-                index = int.Parse(ForTest);
-            }
-            catch (FormatException ex)
-            {
-                Console.WriteLine("Please write a NUMBER");
-                return -404;
 
-            }
-            return index;
-        }
 
         public void Select()
         {
-            int SelectedNum = NumTester(Console.ReadLine());
-            if (SelectedNum == -404) return;
+            int SelectedNum = e.NumTester();
             if (SelectedNum < 0 || SelectedNum > 8) Console.WriteLine("Please choose a number from 0 to 8");
             int index = -1;
             int index2 = -1;
@@ -89,18 +75,11 @@ namespace ConsoleOOPShopCSharp.Class
                     }
                     assortment.PrintListInfo();
                     Console.WriteLine("Where to add: ");
-                    index = NumTester(Console.ReadLine());
-                    if (index == -404) break;
-                    if (index < 0 || index > assortment.categories.Count)
-                    {
-                        Console.WriteLine($"There are only {assortment.categories.Count} categories");
-                        break;
-                    }
+                    index = e.NumTesterCategories(assortment.categories.Count);
                     Console.WriteLine("Please write the name of new product");
                     string productName = Console.ReadLine();
                     Console.WriteLine("Please write the price of new product");
-                    int productPrice = NumTester(Console.ReadLine());
-                    if (productPrice == -404) return;
+                    int productPrice = e.NumTester();
                     Product p = new Product(productName, productPrice);
                     assortment.categories[index - 1].Add(p);
                     break;
@@ -117,14 +96,7 @@ namespace ConsoleOOPShopCSharp.Class
                     Console.Clear();
                     assortment.PrintListInfo();
                     Console.WriteLine("Where to delete: ");
-                    index = NumTester(Console.ReadLine());
-                    if (index == -404) break;
-                    if (index < 0 || index > assortment.categories.Count)
-                    {
-                        Console.WriteLine($"There are only {assortment.categories.Count} categories");
-                        break;
-                    }
-
+                    index = e.NumTesterCategories(assortment.categories.Count);
                     if (assortment.categories[index - 1].GetListCount() <= 0)
                     {
                         Console.WriteLine("We have nothing to delete, first you need to add products!");
@@ -132,8 +104,7 @@ namespace ConsoleOOPShopCSharp.Class
                     }
                     assortment.categories[index - 1].PrintListInfo();
                     Console.WriteLine("What to delete: ");
-                    index2 = NumTester(Console.ReadLine());
-                    if (index2 == -404) break;
+                    index2 = e.NumTester();
                     assortment.categories[index - 1].Remove(index2);
                     break;
                     
@@ -145,14 +116,8 @@ namespace ConsoleOOPShopCSharp.Class
                     }
                     assortment.PrintListInfo();
                     Console.WriteLine("What to delete: ");
-                    index = NumTester(Console.ReadLine());
-                    if (index == -404) break;
-                    if (index < 0 || index > assortment.categories.Count)
-                    {
-                        Console.WriteLine($"There are only {assortment.categories.Count} categories");
-                        break;
-                    }
-                    assortment.Remove(index);
+                    index = e.NumTesterCategories(assortment.categories.Count);
+                    assortment.Remove(index - 1);
                     break;
                     
                 case 5:
@@ -164,13 +129,7 @@ namespace ConsoleOOPShopCSharp.Class
                     }
                     assortment.PrintListInfo();
                     Console.WriteLine("What category: ");
-                    index = NumTester(Console.ReadLine());
-                    if (index == -404) break;
-                    if (index < 0 || index > assortment.categories.Count)
-                    {
-                        Console.WriteLine($"There are only {assortment.categories.Count} categories");
-                        break;
-                    }
+                    index = e.NumTesterCategories(assortment.categories.Count);
                     assortment.categories[index - 1].PrintListInfo();
                     break;
                     

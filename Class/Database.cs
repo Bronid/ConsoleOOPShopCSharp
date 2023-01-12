@@ -14,6 +14,7 @@ namespace ConsoleOOPShopCSharp.Class
         public Database(string connectionString)
         {
             this.sqlite_conn = new SQLiteConnection(connectionString);
+            
         }
 
         public void Connect()
