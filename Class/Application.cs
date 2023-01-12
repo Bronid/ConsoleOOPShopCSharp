@@ -30,7 +30,7 @@ namespace ConsoleOOPShopCSharp.Class
         }
         public void ShowMenu()
         {
-            Console.WriteLine("Options: ");
+            Console.WriteLine("\nOptions: ");
             printLine();
             Console.WriteLine("1. Add Product");
             printLine();
@@ -74,6 +74,7 @@ namespace ConsoleOOPShopCSharp.Class
             if (SelectedNum == -404) return;
             if (SelectedNum < 0 || SelectedNum > 8) Console.WriteLine("Please choose a number from 0 to 8");
             int index = -1;
+            int index2 = -1;
             switch (SelectedNum)
             {
 
@@ -86,7 +87,7 @@ namespace ConsoleOOPShopCSharp.Class
                         Console.WriteLine("First you need to add category!");
                         break;
                     }
-                    assortment.printAssortment();
+                    assortment.PrintListInfo();
                     Console.WriteLine("Where to add: ");
                     index = NumTester(Console.ReadLine());
                     if (index == -404) break;
@@ -95,21 +96,26 @@ namespace ConsoleOOPShopCSharp.Class
                         Console.WriteLine($"There are only {assortment.categories.Count} categories");
                         break;
                     }
-                    Product p = new Product();
-                    p.CreateProduct();
-                    assortment.categories[index - 1].addProduct(p);
+                    Console.WriteLine("Please write the name of new product");
+                    string productName = Console.ReadLine();
+                    Console.WriteLine("Please write the price of new product");
+                    int productPrice = NumTester(Console.ReadLine());
+                    if (productPrice == -404) return;
+                    Product p = new Product(productName, productPrice);
+                    assortment.categories[index - 1].Add(p);
                     break;
 
                 case 2:
                     Console.Clear();
-                    Category c = new Category();
-                    c.createCategory();
-                    assortment.addCategory(c);
+                    Console.WriteLine("Please write the name of new category");
+                    string categoryName = Console.ReadLine();
+                    Category c = new Category(categoryName);
+                    assortment.Add(c);
                     break;
                     
                 case 3:
                     Console.Clear();
-                    assortment.printAssortment();
+                    assortment.PrintListInfo();
                     Console.WriteLine("Where to delete: ");
                     index = NumTester(Console.ReadLine());
                     if (index == -404) break;
@@ -118,7 +124,17 @@ namespace ConsoleOOPShopCSharp.Class
                         Console.WriteLine($"There are only {assortment.categories.Count} categories");
                         break;
                     }
-                    assortment.categories[index - 1].removeProduct();
+
+                    if (assortment.categories[index - 1].GetListCount() <= 0)
+                    {
+                        Console.WriteLine("We have nothing to delete, first you need to add products!");
+                        break;
+                    }
+                    assortment.categories[index - 1].PrintListInfo();
+                    Console.WriteLine("What to delete: ");
+                    index2 = NumTester(Console.ReadLine());
+                    if (index2 == -404) break;
+                    assortment.categories[index - 1].Remove(index2);
                     break;
                     
                 case 4:
@@ -127,7 +143,7 @@ namespace ConsoleOOPShopCSharp.Class
                     {
                         Console.WriteLine("We have nothing to delete, first you need to add category!");
                     }
-                    assortment.printAssortment();
+                    assortment.PrintListInfo();
                     Console.WriteLine("What to delete: ");
                     index = NumTester(Console.ReadLine());
                     if (index == -404) break;
@@ -136,7 +152,7 @@ namespace ConsoleOOPShopCSharp.Class
                         Console.WriteLine($"There are only {assortment.categories.Count} categories");
                         break;
                     }
-                    assortment.removeCategory(index - 1);
+                    assortment.Remove(index);
                     break;
                     
                 case 5:
@@ -146,7 +162,7 @@ namespace ConsoleOOPShopCSharp.Class
                         Console.WriteLine("We have nothing to show you, first you need to add category!");
                         break;
                     }
-                    assortment.printAssortment();
+                    assortment.PrintListInfo();
                     Console.WriteLine("What category: ");
                     index = NumTester(Console.ReadLine());
                     if (index == -404) break;
@@ -155,7 +171,7 @@ namespace ConsoleOOPShopCSharp.Class
                         Console.WriteLine($"There are only {assortment.categories.Count} categories");
                         break;
                     }
-                    assortment.categories[index - 1].printCategory();
+                    assortment.categories[index - 1].PrintListInfo();
                     break;
                     
                 case 6:
@@ -167,7 +183,7 @@ namespace ConsoleOOPShopCSharp.Class
                     }
                     else
                     {
-                        assortment.printAssortment();
+                        assortment.PrintListInfo();
                     }
                     break;
             }

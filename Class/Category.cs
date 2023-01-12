@@ -11,38 +11,17 @@ namespace ConsoleOOPShopCSharp.Class
         private string categoryName = "";
         private List<Product> products = new List<Product>();
 
-        public Category()
+        public Category(string categoryName)
         {
-        }
-       
-        public void Create()
-        {
-            Console.WriteLine("Please write the name of new category");
-            this.categoryName = Console.ReadLine();
+            this.categoryName = categoryName;
             Console.WriteLine($"New category {this.categoryName} added! :3");
         }
+      
         new public void ToString() => Console.WriteLine($"Name: {categoryName}");
 
-        public void Add(Product a)
-        {
-            products.Add(a);
-        }
-
-        public void Remove(int id)
-        {
-            //Перенести в Application Select()
-            if (products.Count <= 0)
-            {
-                Console.WriteLine("We have nothing to delete, first you need to add products!");
-                return;
-            }
-            ToString();
-            Console.WriteLine("What to delete: ");
-            int index = NumTester(Console.ReadLine());
-            if (index == -404) return;
-            products.RemoveAt(index - 1);
-
-        }
+        public void Add(Product a) => products.Add(a);
+        
+        public void Remove(int id) => products.RemoveAt(id);
 
         public void PrintListInfo()
         {
@@ -50,8 +29,12 @@ namespace ConsoleOOPShopCSharp.Class
             for (int i = 0; i < products.Count; i++)
             {
                 Console.Write(i + 1 + ". ");
-                products[i].Print();
+                products[i].ToString();
             }
+        }
+        public int GetListCount()
+        {
+            return products.Count;
         }
 
     }

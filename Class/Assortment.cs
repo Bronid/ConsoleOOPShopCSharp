@@ -13,7 +13,6 @@ namespace ConsoleOOPShopCSharp.Class
         public Assortment()
         {
         }
-
         public void Add(Category c) => categories.Add(c);
 
         public void Remove(int index) => categories.RemoveAt(index);
@@ -24,7 +23,7 @@ namespace ConsoleOOPShopCSharp.Class
             for (int i = 0; i < categories.Count; i++)
             {
                 Console.Write("\n" + (i + 1) + ". ");
-                categories[i].Print();
+                categories[i].ToString();
             }
         }
 

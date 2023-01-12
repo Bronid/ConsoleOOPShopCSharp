@@ -8,7 +8,7 @@ namespace ConsoleOOPShopCSharp.Class
 {
     internal interface ISpacious<T>
     {
-        public void Add(T a);
+        public void Add(T obj);
         public void Remove(int id);
         public void PrintListInfo();
     }
