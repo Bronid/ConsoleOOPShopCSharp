@@ -10,8 +10,7 @@ namespace ConsoleOOPShopCSharp
             application.Start();
             while (application.isStart)
             {
-                application.ShowMenu();
-                application.Select();
+                application.Options();
             }
         }
     }

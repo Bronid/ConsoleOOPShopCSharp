@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.Data.Entity;
+using ConsoleOOPShopCSharp.Class.DataClass;
 
 namespace ConsoleOOPShopCSharp.Class
 {

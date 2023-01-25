@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleOOPShopCSharp.Class
+namespace ConsoleOOPShopCSharp.Class.DataClass
 {
     public class Product
     {

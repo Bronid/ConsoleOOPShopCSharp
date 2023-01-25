@@ -1,10 +1,11 @@
+using ConsoleOOPShopCSharp.Class.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleOOPShopCSharp.Class
+namespace ConsoleOOPShopCSharp.Class.DataClass
 {
     public class Category : ISpacious<Product>
     {
@@ -17,11 +18,11 @@ namespace ConsoleOOPShopCSharp.Class
             this.categoryName = categoryName;
             this.categoryId = categoryId;
         }
-      
+
         new public void ToString() => Console.WriteLine($"Name: {categoryName}");
 
         public void Add(Product a) => products.Add(a);
-        
+
         public void Remove(int id) => products.RemoveAt(id);
         public string getProductNameByIndex(int id) => products[id].ProductName;
 

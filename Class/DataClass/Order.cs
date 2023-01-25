@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleOOPShopCSharp.Class
+namespace ConsoleOOPShopCSharp.Class.DataClass
 {
-    internal class Check
+    internal class Order
     {
     }
 }

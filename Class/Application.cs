@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ConsoleOOPShopCSharp.Class;
+using ConsoleOOPShopCSharp.Class.DataClass;
 
 namespace ConsoleOOPShopCSharp.Class
 {
@@ -30,7 +30,7 @@ namespace ConsoleOOPShopCSharp.Class
         {
             Console.WriteLine("-------------------------------------------");
         }
-        public void ShowMenu()
+        private void ShowMenu()
         {
             Console.WriteLine("\nOptions: ");
             printLine();
@@ -56,12 +56,11 @@ namespace ConsoleOOPShopCSharp.Class
 
 
 
-        public void Select()
+        public void Options()
         {
+            ShowMenu();
             int SelectedNum = e.NumTester();
-            if (SelectedNum < 0 || SelectedNum > 8) Console.WriteLine("Please choose a number from 0 to 8");
-            int index = -1;
-            int index2 = -1;
+            if (SelectedNum < 0 || SelectedNum > 6) Console.WriteLine("Please choose a number from 0 to 6");
             switch (SelectedNum)
             {
 
@@ -76,7 +75,7 @@ namespace ConsoleOOPShopCSharp.Class
                     }
                     assortment.PrintListInfo();
                     Console.WriteLine("Where to add: ");
-                    index = e.NumTesterCategories(assortment.categories.Count);
+                    int index = e.NumTesterCategories(assortment.categories.Count);
                     Console.WriteLine("Please write the name of new product");
                     string productName = Console.ReadLine();
                     Console.WriteLine("Please write the price of new product");
@@ -107,7 +106,7 @@ namespace ConsoleOOPShopCSharp.Class
                     }
                     assortment.categories[index - 1].PrintListInfo();
                     Console.WriteLine("What to delete: ");
-                    index2 = e.NumTester();
+                    int index2 = e.NumTester();
                     db.executeQuery($"DELETE FROM Products WHERE categoryId = {assortment.categories[index - 1].getCategoryId()} AND productName = \"{assortment.categories[index - 1].getProductNameByIndex(index2 - 1)}\"; ");
                     Console.WriteLine($"Product {assortment.categories[index - 1].getProductNameByIndex(index2 - 1)} removed!");
                     db.syncData(out assortment);
