@@ -20,8 +20,9 @@ namespace ConsoleOOPShopCSharp.Class
             isStart = true;
             Database db = new Database(connectionString);
             db.Connect();
-            //db.executeQuery("CREATE TABLE Products (productId INTEGER PRIMARY KEY, productName TEXT, productPrice REAL, categoryId INTEGER)");
-            //db.executeQuery("CREATE TABLE Categories (categoryId INTEGER PRIMARY KEY, categoryName TEXT)");
+            db.executeQuery("CREATE TABLE IF NOT EXISTS Products (productId INTEGER PRIMARY KEY, productName TEXT, productPrice REAL, categoryId INTEGER)");
+            db.executeQuery("CREATE TABLE IF NOT EXISTS Categories (categoryId INTEGER PRIMARY KEY, categoryName TEXT)");
+            assortment = db.syncData();
             Console.WriteLine("Welcome to ConsoleShopApplication!");
         }
 

@@ -13,6 +13,7 @@ namespace ConsoleOOPShopCSharp.Class
         public Assortment()
         {
         }
+
         public void Add(Category c) => categories.Add(c);
 
         public void Remove(int index) => categories.RemoveAt(index);
