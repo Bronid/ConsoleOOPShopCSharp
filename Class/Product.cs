@@ -15,9 +15,10 @@ namespace ConsoleOOPShopCSharp.Class
         {
             this.productName = productName;
             this.productPrice = productPrice;
-            Console.WriteLine($"New product {this.productName} with price {this.productPrice}zl added! :3");
         }
         new public void ToString() => Console.WriteLine($"Name: {productName}  Price: {productPrice}");
+
+        public string ProductName { get { return productName; } }
 
     }
 }

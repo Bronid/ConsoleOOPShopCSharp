@@ -9,12 +9,13 @@ namespace ConsoleOOPShopCSharp.Class
     public class Category : ISpacious<Product>
     {
         private string categoryName = "";
+        private int categoryId = 0;
         private List<Product> products = new List<Product>();
 
-        public Category(string categoryName)
+        public Category(string categoryName, int categoryId)
         {
             this.categoryName = categoryName;
-            Console.WriteLine($"New category {this.categoryName} added! :3");
+            this.categoryId = categoryId;
         }
       
         new public void ToString() => Console.WriteLine($"Name: {categoryName}");
@@ -22,6 +23,7 @@ namespace ConsoleOOPShopCSharp.Class
         public void Add(Product a) => products.Add(a);
         
         public void Remove(int id) => products.RemoveAt(id);
+        public string getProductNameByIndex(int id) => products[id].ProductName;
 
         public void PrintListInfo()
         {
@@ -36,6 +38,10 @@ namespace ConsoleOOPShopCSharp.Class
         {
             return products.Count;
         }
+
+        public string getName() => categoryName;
+
+        public int getCategoryId() => categoryId;
 
     }
 }
