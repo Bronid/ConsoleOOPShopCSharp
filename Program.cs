@@ -10,7 +10,7 @@ namespace ConsoleOOPShopCSharp
             application.Start();
             while (application.isStart)
             {
-                application.Options();
+                application.pSettings();
             }
         }
     }

@@ -49,6 +49,25 @@ namespace ConsoleOOPShopCSharp.Class
             sqlite_cmd.ExecuteNonQuery();
         }
 
+        public bool isUserExist(string login)
+        {
+            string stm = $"SELECT * FROM Users WHERE Login = \"{login}\"";
+            var cmd = new SQLiteCommand(stm, sqlite_conn);
+            SQLiteDataReader rdr = cmd.ExecuteReader();
+            if (rdr.Read()) return true;
+            else return false;
+        }
+
+        public bool isCorrectPassword(string login, string pass)
+        {
+            string stm = $"SELECT * FROM Users WHERE Login = \"{login}\"";
+            var cmd = new SQLiteCommand(stm, sqlite_conn);
+            SQLiteDataReader rdr = cmd.ExecuteReader();
+            rdr.Read();
+            if (rdr.GetString(2) == pass) return true;
+            else return false;
+        }
+
         public void syncData(out Assortment assortment)
         {
             Assortment tempassortment = new Assortment();

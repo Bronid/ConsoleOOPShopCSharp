@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ConsoleOOPShopCSharp.Class.DataClass
 {
-    internal class Order
+    public class Order
     {
+        public int Id { get; set; }
+        public string Date { get; set; }
+        public List<Product> Products { get; set; }
     }
 }

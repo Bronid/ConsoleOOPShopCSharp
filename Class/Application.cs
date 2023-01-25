@@ -11,22 +11,25 @@ namespace ConsoleOOPShopCSharp.Class
 {
     public class Application
     {
+        float startUserBalance = 100;
         ExceptionHelper e = new ExceptionHelper();
         const string connectionString = "Data Source=database.db; Version=3; New=True; Compress=True;";
         Database db = new Database(connectionString);
         public bool isStart = false;
         Assortment assortment = new Assortment();
+        List<User> users = new List<User>(); //todo
         public void Start()
         {
             isStart = true;
             db.Connect();
             db.executeQuery("CREATE TABLE IF NOT EXISTS Products (productId INTEGER PRIMARY KEY, productName TEXT, productPrice REAL, categoryId INTEGER)");
             db.executeQuery("CREATE TABLE IF NOT EXISTS Categories (categoryId INTEGER PRIMARY KEY, categoryName TEXT)");
+            db.executeQuery("CREATE TABLE IF NOT EXISTS Users (userId INTEGER PRIMARY KEY, Login TEXT, Password TEXT, Balance REAL, Permissions TEXT)");
             db.syncData(out assortment);
             Console.WriteLine("Welcome to ConsoleShopApplication!");
+            //StartMenu();
         }
-
-        internal void printLine()
+        private void printLine()
         {
             Console.WriteLine("-------------------------------------------");
         }
@@ -46,17 +49,94 @@ namespace ConsoleOOPShopCSharp.Class
             printLine();
             Console.WriteLine("6. Show Categories");
             printLine();
-            Console.WriteLine("7. Filter Products");
-            printLine();
-            Console.WriteLine("8. Filter Categories");
-            printLine();
             Console.WriteLine("0. EXIT\n");
             Console.WriteLine("Please choose a number:");
         }
+        private void Login()
+        {
+            string login = "";
+            string pass = "";
+
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("\nPlease authorize yourself(to back print '0')");
+                Console.WriteLine("Login: ");
+                login = Console.ReadLine();
+                if (login == "0") StartMenu();
+                if (db.isUserExist(login)) break;
+                else Console.WriteLine("User is not exists!");
+            }
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("\nPlease authorize yourself(to back print '0')");
+                Console.WriteLine("Password: ");
+                pass = Console.ReadLine();
+                if (pass == "0") StartMenu();
+                if (db.isCorrectPassword(login, pass)) break;
+                else Console.WriteLine("Incorrect password!");
+            }
+
+            AuthorizeUser(login);
+        }
+        private void Register()
+        {
+            string login = "";
+            string pass = "";
+
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("\nPlease register(to back print '0')");
+                Console.WriteLine("Login: ");
+                login = Console.ReadLine();
+                if (login == "0") StartMenu();
+                if (!db.isUserExist(login)) break;
+                else Console.WriteLine("User with this login already exists!");
+            }
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("\nPlease register(to back print '0')");
+                Console.WriteLine("Password: ");
+                pass = Console.ReadLine();
+                if (pass == "0") StartMenu();
+                break;
+            }
+            Console.Clear();
+            db.executeQuery($"INSERT INTO Users (Login, Password, Balance, Permissions) VALUES (\"{login}\", \"{pass}\", {startUserBalance}, \"User\")");
+            Console.WriteLine("New user added!");
+        }
+        public void AuthorizeUser(string login)
+        {
+
+        }
+        private void StartMenu()
+        {
+            while (isStart)
+            {
+                Console.WriteLine("\nOptions: ");
+                printLine();
+                Console.WriteLine("1. Login");
+                printLine();
+                Console.WriteLine("2. Register");
+                printLine();
+                Console.WriteLine("0. EXIT\n");
+                Console.WriteLine("Please choose a number:");
+                int SelectedNum = e.NumTester();
+                if (SelectedNum < 0 || SelectedNum > 2) Console.WriteLine("Please choose a number from 0 to 2");
+                switch (SelectedNum)
+                {
+                    case 0: Console.Clear(); isStart = false; break;
+                    case 1: Login(); break;
+                    case 2: Register(); break;
+                }
+            }
+        }
 
 
-
-        public void Options()
+        public void pSettings()
         {
             ShowMenu();
             int SelectedNum = e.NumTester();
