@@ -18,7 +18,8 @@ namespace ConsoleOOPShopCSharp.Class.DataClass
         }
         new public void ToString() => Console.WriteLine($"Name: {productName}  Price: {productPrice}");
 
-        public string ProductName { get { return productName; } }
+        public string GetProductName() { return productName; }
+        public float GetProductPrice() { return productPrice; }
 
     }
 }

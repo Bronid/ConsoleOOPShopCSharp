@@ -64,13 +64,14 @@ namespace ConsoleOOPShopCSharp.Class
             var cmd = new SQLiteCommand(stm, sqlite_conn);
             SQLiteDataReader rdr = cmd.ExecuteReader();
             rdr.Read();
-            if (rdr.GetString(2) == pass) return true;
+            if (rdr.GetString(1) == pass) return true;
             else return false;
         }
 
-        public void syncData(out Assortment assortment)
+        public void syncData(out Assortment assortment, out List<User> users)
         {
             Assortment tempassortment = new Assortment();
+            List<User> tempusers = new List<User>();
 
             string stm = "SELECT * FROM Categories";
             var cmd = new SQLiteCommand(stm, sqlite_conn);
@@ -97,7 +98,19 @@ namespace ConsoleOOPShopCSharp.Class
                     tempassortment.categories[idList.IndexOf(id)].Add(temp);
                 }
             }
+
+            stm = "SELECT * FROM Users";
+            cmd = new SQLiteCommand(stm, sqlite_conn);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                User temp = new User(rdr.GetString(0), rdr.GetString(1), rdr.GetFloat(2), rdr.GetString(3));
+                tempusers.Add(temp);
+            }
+
             assortment = tempassortment;
+            users = tempusers;
             Console.WriteLine("Data synchronized");
         }
     }

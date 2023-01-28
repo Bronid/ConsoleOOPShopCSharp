@@ -24,7 +24,7 @@ namespace ConsoleOOPShopCSharp.Class.DataClass
         public void Add(Product a) => products.Add(a);
 
         public void Remove(int id) => products.RemoveAt(id);
-        public string getProductNameByIndex(int id) => products[id].ProductName;
+        public string getProductNameByIndex(int id) => products[id].GetProductName();
 
         public void PrintListInfo()
         {
