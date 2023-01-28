@@ -20,8 +20,8 @@ namespace ConsoleOOPShopCSharp.Class
         private bool isStart = false;
         private bool isAuthorized = false;
         Assortment assortment = new Assortment();
-        static List<User> users = new List<User>();
-        static User currentUser = null;
+        List<User> users = new List<User>();
+        User currentUser = null;
         public void Start()
         {
             isStart = true;
@@ -105,7 +105,7 @@ namespace ConsoleOOPShopCSharp.Class
             db.syncData(out assortment, out users);
             Console.WriteLine("New user added!");
         }
-        public void AuthorizeUser(string login)
+        private void AuthorizeUser(string login)
         {
             currentUser = users.Find(user => user.GetLogin() == login);
             isAuthorized = true;
@@ -140,10 +140,8 @@ namespace ConsoleOOPShopCSharp.Class
                 else MainMenu();
             }
         }
-
         private void MainMenu()
         {
-            Console.Clear();
             Console.WriteLine($"Hello, {currentUser.GetLogin()}!");
             Console.WriteLine($"Your balance is: {currentUser.GetBalance()}");
             Console.WriteLine("\nOptions: ");
@@ -160,7 +158,7 @@ namespace ConsoleOOPShopCSharp.Class
             printLine();
             Console.WriteLine("0. EXIT");
             int SelectedNum = e.NumTester();
-            if (SelectedNum < 0 || SelectedNum > 4)
+            if (SelectedNum < 0 || SelectedNum > 5)
             {
                 Console.Clear();
                 Console.WriteLine("Please choose a number from 0 to 5");
@@ -175,6 +173,7 @@ namespace ConsoleOOPShopCSharp.Class
                     OrderMenu();
                     break;
                 case 3:
+                    Console.Clear();
                     currentUser.PrintListInfo();
                     break;
                 case 4:
@@ -187,7 +186,6 @@ namespace ConsoleOOPShopCSharp.Class
                     break;
             }
         }
-
         private void OrderMenu()
         {
             Console.Clear();
@@ -218,10 +216,10 @@ namespace ConsoleOOPShopCSharp.Class
             }
             else
             {
-                Console.WriteLine($"You have not enough money\n Your Balance: {currentUser.GetBalance()}");
+                Console.WriteLine($"You have not enough money\n");
             }
         }
-        public void SettingsMenu()
+        private void SettingsMenu()
         {
             Console.WriteLine("\nOptions: ");
             printLine();

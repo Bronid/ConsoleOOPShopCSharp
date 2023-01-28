@@ -24,7 +24,7 @@ namespace ConsoleOOPShopCSharp.Class.DataClass
             this.date = date;
         }
 
-        public new string ToString() => $"Product: {productName}, Count: {count}, Date: {date}\n";
+        public new string ToString() => $"Product: {productName}, Price per one: {productPrice}, Count: {count}, Date: {date}\n";
         public float getProductPrice() => productPrice;
         public int getCount() => count;
 
