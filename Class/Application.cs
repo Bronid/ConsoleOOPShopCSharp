@@ -48,7 +48,11 @@ namespace ConsoleOOPShopCSharp.Class
                 login = Console.ReadLine();
                 if (login == "0") LoginMenu();
                 if (db.isUserExist(login)) break;
-                else Console.Clear(); Console.WriteLine("User is not exists!");
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("User is not exists!");
+                }
             }
             while (true)
             {
@@ -58,7 +62,11 @@ namespace ConsoleOOPShopCSharp.Class
                 pass = Console.ReadLine();
                 if (pass == "0") LoginMenu();
                 if (db.isCorrectPassword(login, pass)) break;
-                else Console.Clear(); Console.WriteLine("Incorrect password!");
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Incorrect password!");
+                }
             }
 
             AuthorizeUser(login);
@@ -75,7 +83,11 @@ namespace ConsoleOOPShopCSharp.Class
                 login = Console.ReadLine();
                 if (login == "0") LoginMenu();
                 if (!db.isUserExist(login)) break;
-                else Console.Clear(); Console.WriteLine("User with this login already exists!");
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("User with this login already exists!");
+                }
             }
             while (true)
             {
@@ -95,7 +107,6 @@ namespace ConsoleOOPShopCSharp.Class
         {
             currentUser = users.Find(user => user.GetLogin() == login);
             isAuthorized = true;
-            Console.WriteLine($"User {login} authorized!");
         }
         private void LoginMenu()
         {
@@ -112,7 +123,11 @@ namespace ConsoleOOPShopCSharp.Class
                     Console.WriteLine("0. EXIT\n");
                     Console.WriteLine("Please choose a number:");
                     int SelectedNum = e.NumTester();
-                    if (SelectedNum < 0 || SelectedNum > 2) Console.Clear(); Console.WriteLine("Please choose a number from 0 to 2");
+                    if (SelectedNum < 0 || SelectedNum > 2)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Please choose a number from 0 to 2");
+                    }
                     switch (SelectedNum)
                     {
                         case 0: Console.Clear(); isStart = false; break;
@@ -127,6 +142,7 @@ namespace ConsoleOOPShopCSharp.Class
         private void MainMenu()
         {
             Console.Clear();
+            Console.WriteLine($"Hello, {currentUser.GetLogin()}!");
             Console.WriteLine($"Your balance is: {currentUser.GetBalance()}");
             Console.WriteLine("\nOptions: ");
             printLine();
@@ -136,7 +152,29 @@ namespace ConsoleOOPShopCSharp.Class
             printLine();
             Console.WriteLine("3. Show history");
             printLine();
-            Console.WriteLine("4. Options");
+            Console.WriteLine("4. Logout");
+            printLine();
+            Console.WriteLine("5. Options");
+            printLine();
+            Console.WriteLine("0. EXIT");
+            int SelectedNum = e.NumTester();
+            if (SelectedNum < 0 || SelectedNum > 4)
+            {
+                Console.Clear();
+                Console.WriteLine("Please choose a number from 0 to 5");
+            }
+            switch (SelectedNum)
+            {
+                case 0: Console.Clear(); isStart = false; break;
+                case 1: break;
+                case 2: break;
+                case 3: break;
+                case 4:
+                    currentUser = null;
+                    isAuthorized = false;
+                    Console.Clear();
+                    break;
+            }
         }
 
         public void SettingsMenu()
