@@ -35,6 +35,8 @@ namespace ConsoleOOPShopCSharp.Class.DataClass
                 products[i].ToString();
             }
         }
+        public Product getProductByIndex(int index) => products[index];
+        
         public int GetListCount()
         {
             return products.Count;

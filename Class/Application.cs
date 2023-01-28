@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ConsoleOOPShopCSharp.Class.DataClass;
 using System.Configuration;
+using System.Reflection;
 
 namespace ConsoleOOPShopCSharp.Class
 {
@@ -28,6 +29,7 @@ namespace ConsoleOOPShopCSharp.Class
             db.executeQuery("CREATE TABLE IF NOT EXISTS Products (productId INTEGER PRIMARY KEY, productName TEXT, productPrice REAL, categoryId INTEGER)");
             db.executeQuery("CREATE TABLE IF NOT EXISTS Categories (categoryId INTEGER PRIMARY KEY, categoryName TEXT)");
             db.executeQuery("CREATE TABLE IF NOT EXISTS Users (Login TEXT NOT NULL, Password TEXT NOT NULL, Balance REAL, Permissions TEXT)");
+            db.executeQuery("CREATE TABLE IF NOT EXISTS Orders (orderId INTEGER PRIMARY KEY, userLogin TEXT, productName TEXT, productPrice REAL, Count INTEGER, orderDate DATE)");
             db.syncData(out assortment, out users);
             Console.WriteLine("Welcome to ConsoleShopApplication!");
             LoginMenu();
@@ -166,17 +168,59 @@ namespace ConsoleOOPShopCSharp.Class
             switch (SelectedNum)
             {
                 case 0: Console.Clear(); isStart = false; break;
-                case 1: break;
-                case 2: break;
-                case 3: break;
+                case 1:
+                    OrderMenu();
+                    break;
+                case 2:
+                    OrderMenu();
+                    break;
+                case 3:
+                    currentUser.PrintListInfo();
+                    break;
                 case 4:
                     currentUser = null;
                     isAuthorized = false;
                     Console.Clear();
                     break;
+                case 5:
+                    SettingsMenu();
+                    break;
             }
         }
 
+        private void OrderMenu()
+        {
+            Console.Clear();
+            if (assortment.categories.Count <= 0)
+            {
+                Console.Clear();
+                Console.WriteLine("We have nothing to show you, first you need to add category!");
+                return;
+            }
+            assortment.PrintListInfo();
+            Console.WriteLine("What category: ");
+            int indexCategory = e.NumTesterCategories(assortment.categories.Count) - 1;
+            assortment.categories[indexCategory].PrintListInfo();
+            Console.WriteLine("What product you want to buy: ");
+            int indexProduct = e.NumTester() - 1;
+            Product productBuy = assortment.categories[indexCategory].getProductByIndex(indexProduct);
+            Console.WriteLine("Count: ");
+            int productCount = e.NumTester();
+            if (currentUser.GetBalance() - (productBuy.GetProductPrice() * productCount) >= 0)
+            { 
+                db.executeQuery($"UPDATE Users SET Balance = {currentUser.GetBalance() - (productBuy.GetProductPrice() * productCount)} WHERE Login = \"{currentUser.GetLogin()}\"");
+                DateTime time = DateTime.Now;
+                db.executeQuery($"INSERT INTO Orders(userLogin, productName, productPrice, Count, orderDate)" +
+                    $"VALUES(\"{currentUser.GetLogin()}\", \"{productBuy.GetProductName()}\", {productBuy.GetProductPrice()}, {productCount}, " +
+                    $"\"{time.Year}-{time.Month}-{time.Day} {time.Hour}:{time.Minute}:{time.Second}\")");
+                db.syncData(out assortment, out users);
+                AuthorizeUser(currentUser.GetLogin());
+            }
+            else
+            {
+                Console.WriteLine($"You have not enough money\n Your Balance: {currentUser.GetBalance()}");
+            }
+        }
         public void SettingsMenu()
         {
             Console.WriteLine("\nOptions: ");

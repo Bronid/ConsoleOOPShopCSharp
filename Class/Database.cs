@@ -78,6 +78,7 @@ namespace ConsoleOOPShopCSharp.Class
             SQLiteDataReader rdr = cmd.ExecuteReader();
 
             List<int> idList = new List<int>();
+            List<Product> tempProducts = new List<Product>();
 
             while (rdr.Read())
             {
@@ -107,6 +108,15 @@ namespace ConsoleOOPShopCSharp.Class
             {
                 User temp = new User(rdr.GetString(0), rdr.GetString(1), rdr.GetFloat(2), rdr.GetString(3));
                 tempusers.Add(temp);
+
+                string tempstm = $"SELECT * FROM Orders WHERE userLogin = \"{temp.GetLogin()}\"";
+                var tempcmd = new SQLiteCommand(tempstm, sqlite_conn);
+                SQLiteDataReader temprdr = tempcmd.ExecuteReader();
+                while (temprdr.Read())
+                {
+                    Order temporder = new Order(temprdr.GetString(1), temprdr.GetString(2), temprdr.GetFloat(3), temprdr.GetInt32(4), temprdr.GetString(5));
+                    tempusers[tempusers.IndexOf(temp)].GetOrders().Add(temporder);
+                }
             }
 
             assortment = tempassortment;

@@ -27,16 +27,17 @@ namespace ConsoleOOPShopCSharp.Class.DataClass
 
         public string GetLogin() { return Name; }
         public float GetBalance() { return Balance; }
+        public List<Order> GetOrders() { return orders; }
         public void PrintListInfo()
         {
-            Console.WriteLine($"{Name} order list:");
+            float sum = 0;
+            Console.WriteLine($"{Name} order history list:");
             for (int i = 0; i < orders.Count; i++)
             {
-                Console.Write(i + 1 + ". ");
-                orders[i].ToString();
+                Console.Write(i + 1 + $". {orders[i].ToString()}");
+                sum += orders[i].getProductPrice() * orders[i].getCount();
             }
-
-
+            Console.WriteLine($"Summary: {sum}");
         }
     }
 }

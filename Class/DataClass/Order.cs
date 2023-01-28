@@ -9,22 +9,24 @@ namespace ConsoleOOPShopCSharp.Class.DataClass
 {
     public class Order
     {
-        private int Id;
-        private string Date;
-        private List<Product> Products;
-        private new string ToString() => $"Id: {Id}  Date: {Date}\n";
-        public void PrintListInfo()
+        private string userLogin = "";
+        private string productName = "";
+        private float productPrice = 0;
+        private int count = 0;
+        private string date = "";
+
+        public Order(string userLogin, string productName, float productPrice, int count, string date)
         {
-            float sum = 0;
-            ToString();
-            Console.WriteLine($"Products: ");
-            for (int i = 0; i < Products.Count; i++)
-            {
-                Console.Write(i + 1 + ". ");
-                Products[i].ToString();
-                sum += Products[i].GetProductPrice();
-            }
-            Console.WriteLine($"Summary: {sum}");
+            this.userLogin = userLogin;
+            this.productName = productName;
+            this.productPrice = productPrice;
+            this.count = count;
+            this.date = date;
         }
+
+        public new string ToString() => $"Product: {productName}, Count: {count}, Date: {date}\n";
+        public float getProductPrice() => productPrice;
+        public int getCount() => count;
+
     }
 }
