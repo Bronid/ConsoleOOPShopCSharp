@@ -1,5 +1,7 @@
-﻿using ConsoleOOPShopCSharp.Class.Interface;
+﻿using ConsoleOOPShopCSharp.Class.Enumaratos;
+using ConsoleOOPShopCSharp.Class.Interface;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,12 +9,18 @@ using System.Threading.Tasks;
 
 namespace ConsoleOOPShopCSharp.Class.DataClass
 {
-    public class Assortment : ISpacious<Category>
+    public class Assortment : ISpacious<Category>, IEnumerable
     {
         public List<Category> categories = new List<Category>();
 
         public Assortment()
         {
+        }
+        IEnumerator IEnumerable.GetEnumerator() => (IEnumerator)GetEnumerator();
+
+        public CategoryEnum GetEnumerator()
+        {
+            return new CategoryEnum(categories);
         }
 
         public void Add(Category c) => categories.Add(c);
@@ -28,6 +36,8 @@ namespace ConsoleOOPShopCSharp.Class.DataClass
                 categories[i].ToString();
             }
         }
+
+        public Category GetCategory(int index) => categories[index];
 
     }
 }

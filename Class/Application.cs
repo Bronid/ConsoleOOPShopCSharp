@@ -146,11 +146,11 @@ namespace ConsoleOOPShopCSharp.Class
             Console.WriteLine($"Your balance is: {currentUser.GetBalance()}");
             Console.WriteLine("\nOptions: ");
             printLine();
-            Console.WriteLine("1. Show product list");
+            Console.WriteLine("1. Buy product");
             printLine();
-            Console.WriteLine("2. Filter products");
+            Console.WriteLine("2. Buy product(with filter)");
             printLine();
-            Console.WriteLine("3. Show history");
+            Console.WriteLine("3. Show order history");
             printLine();
             Console.WriteLine("4. Logout");
             printLine();
@@ -170,7 +170,7 @@ namespace ConsoleOOPShopCSharp.Class
                     OrderMenu();
                     break;
                 case 2:
-                    OrderMenu();
+                    OrderMenuFilter();
                     break;
                 case 3:
                     Console.Clear();
@@ -186,7 +186,7 @@ namespace ConsoleOOPShopCSharp.Class
                     break;
             }
         }
-        private void OrderMenu()
+        private void OrderMenu(bool isSorted = false)
         {
             Console.Clear();
             if (assortment.categories.Count <= 0)
@@ -206,6 +206,94 @@ namespace ConsoleOOPShopCSharp.Class
             int productCount = e.NumTester();
             if (currentUser.GetBalance() - (productBuy.GetProductPrice() * productCount) >= 0)
             { 
+                db.executeQuery($"UPDATE Users SET Balance = {currentUser.GetBalance() - (productBuy.GetProductPrice() * productCount)} WHERE Login = \"{currentUser.GetLogin()}\"");
+                DateTime time = DateTime.Now;
+                db.executeQuery($"INSERT INTO Orders(userLogin, productName, productPrice, Count, orderDate)" +
+                    $"VALUES(\"{currentUser.GetLogin()}\", \"{productBuy.GetProductName()}\", {productBuy.GetProductPrice()}, {productCount}, " +
+                    $"\"{time.Year}-{time.Month}-{time.Day} {time.Hour}:{time.Minute}:{time.Second}\")");
+                db.syncData(out assortment, out users);
+                AuthorizeUser(currentUser.GetLogin());
+            }
+            else
+            {
+                Console.WriteLine($"You have not enough money\n");
+            }
+        }
+
+        private void OrderMenuFilter()
+        {
+            Console.Clear();
+            if (assortment.categories.Count <= 0)
+            {
+                Console.Clear();
+                Console.WriteLine("We have nothing to show you, first you need to add category!");
+                return;
+            }
+            Assortment sortedAssortment = new Assortment();
+            Console.WriteLine("Write first lettes to filter Categories by name(or write 0 to skip): ");
+            string categoryFilter = Console.ReadLine();
+            if (categoryFilter != "0")
+            {
+                foreach (Category category in assortment.categories)
+                {
+                    if (category.getName().StartsWith(categoryFilter))
+                        sortedAssortment.categories.Add(category);
+                }
+            }
+            else sortedAssortment = assortment;
+            sortedAssortment.PrintListInfo();
+            Console.WriteLine("What category: ");
+            int indexCategory = e.NumTesterCategories(assortment.categories.Count) - 1;
+            sortedAssortment.categories[indexCategory].PrintListInfo();
+
+            Console.WriteLine("Write first lettes to filter Products by name(or write 0 to skip): ");
+            string productsFilter = Console.ReadLine();
+            if (productsFilter != "0")
+            {
+                Category filtredCategory = new(sortedAssortment.categories[indexCategory].getName(), sortedAssortment.categories[indexCategory].getCategoryId());
+                foreach (Product product in sortedAssortment.categories[indexCategory])
+                {
+                    if (product.GetProductName().StartsWith(productsFilter))
+                        filtredCategory.Add(product);
+                }
+                sortedAssortment.categories[indexCategory] = filtredCategory;
+            }
+            else sortedAssortment.categories[indexCategory] = assortment.categories[indexCategory];
+            sortedAssortment.categories[indexCategory].PrintListInfo();
+            Console.WriteLine("Write min price to filter Products by price: ");
+            float productsFilterMin = e.NumTester();
+            if (productsFilterMin != 0)
+            {
+                Category filtredCategory = new(sortedAssortment.categories[indexCategory].getName(), sortedAssortment.categories[indexCategory].getCategoryId());
+                foreach (Product product in sortedAssortment.categories[indexCategory])
+                {
+                    if (product.GetProductPrice() >= productsFilterMin)
+                        filtredCategory.Add(product);
+                }
+                sortedAssortment.categories[indexCategory] = filtredCategory;
+            }
+            sortedAssortment.categories[indexCategory].PrintListInfo();
+            Console.WriteLine("Write max price to filter Products by price: ");
+            float productsFilterMax = e.NumTester();
+            if (productsFilterMax != 0)
+            {
+                Category filtredCategory = new(sortedAssortment.categories[indexCategory].getName(), sortedAssortment.categories[indexCategory].getCategoryId());
+                foreach (Product product in sortedAssortment.categories[indexCategory])
+                {
+                    if (product.GetProductPrice() <= productsFilterMax)
+                        filtredCategory.Add(product);
+                }
+                sortedAssortment.categories[indexCategory] = filtredCategory;
+            }
+
+            sortedAssortment.categories[indexCategory].PrintListInfo();
+            Console.WriteLine("What product you want to buy: ");
+            int indexProduct = e.NumTester() - 1;
+            Product productBuy = sortedAssortment.categories[indexCategory].getProductByIndex(indexProduct);
+            Console.WriteLine("Count: ");
+            int productCount = e.NumTester();
+            if (currentUser.GetBalance() - (productBuy.GetProductPrice() * productCount) >= 0)
+            {
                 db.executeQuery($"UPDATE Users SET Balance = {currentUser.GetBalance() - (productBuy.GetProductPrice() * productCount)} WHERE Login = \"{currentUser.GetLogin()}\"");
                 DateTime time = DateTime.Now;
                 db.executeQuery($"INSERT INTO Orders(userLogin, productName, productPrice, Count, orderDate)" +
