@@ -191,9 +191,10 @@ namespace ConsoleOOPShopCSharp.Class
                 return;
             }
             newAsortment.PrintListInfo();
-            Console.WriteLine("What category: ");
+            Console.WriteLine("What category:\n0. EXIT");
             int indexCategory = e.NumTesterCategories(newAsortment) - 1;
-            if(newAsortment.categories[indexCategory].GetListCount() <= 0)
+            if (indexCategory == -1) return;
+            if (newAsortment.categories[indexCategory].GetListCount() <= 0)
             {
                 Console.WriteLine("We have nothing to show you, first you need to add a product!");
                 return;
@@ -258,9 +259,9 @@ namespace ConsoleOOPShopCSharp.Class
                     case 7: OrderMenu(sortedAssortment); break;
                     case 1:
                         Console.Clear();
-                        Console.WriteLine("Write first lettes to filter Categories by name(or write -1 to return): ");
+                        Console.WriteLine("Write first lettes to filter Categories by name(or write 0 to return): ");
                         string categoryFilter = Console.ReadLine();
-                        if (categoryFilter != "-1")
+                        if (categoryFilter != "0")
                         {
                             Assortment tempAssortment = new Assortment();
                             foreach (Category category in sortedAssortment.categories)
@@ -273,9 +274,9 @@ namespace ConsoleOOPShopCSharp.Class
                         break;
                     case 2:
                         Console.Clear();
-                        Console.WriteLine("Write first lettes to filter Products by name(or write -1 to skip): ");
+                        Console.WriteLine("Write first lettes to filter Products by name(or write 0 to skip): ");
                         string productsFilter = Console.ReadLine();
-                        if (productsFilter != "-1")
+                        if (productsFilter != "0")
                         {
                             Assortment tempAssortment = new Assortment();
                             int i = 0;
@@ -296,9 +297,9 @@ namespace ConsoleOOPShopCSharp.Class
                         break;
                     case 3:
                         Console.Clear();
-                        Console.WriteLine("Write min price to filter Products by price(write -1 to skip): ");
+                        Console.WriteLine("Write min price to filter Products by price(write 0 to skip): ");
                         float productsFilterMin = e.NumTester();
-                        if (productsFilterMin >= 0)
+                        if (productsFilterMin != 0)
                         {
                             Assortment tempAssortment = new Assortment();
                             foreach (Category category in sortedAssortment.categories)
@@ -316,9 +317,9 @@ namespace ConsoleOOPShopCSharp.Class
                             sortedAssortment = tempAssortment;
                         }
 
-                        Console.WriteLine("Write max price to filter Products by price(write -1 to skip): ");
+                        Console.WriteLine("Write max price to filter Products by price(write 0 to skip): ");
                         float productsFilterMax = e.NumTester();
-                        if (productsFilterMax >= 0)
+                        if (productsFilterMax != 0)
                         {
                             Assortment tempAssortment = new Assortment();
                             foreach (Category category in sortedAssortment.categories)
@@ -335,6 +336,7 @@ namespace ConsoleOOPShopCSharp.Class
                             }
                             sortedAssortment = tempAssortment;
                         }
+
                         break;
                 }
             }
@@ -377,7 +379,7 @@ namespace ConsoleOOPShopCSharp.Class
                     Console.WriteLine("Please write the name of new product");
                     string productName = Console.ReadLine();
                     Console.WriteLine("Please write the price of new product");
-                    int productPrice = e.NumTester();
+                    int productPrice = e.NumTesterPrice();
                     db.executeQuery($"INSERT INTO Products (productName, productPrice, categoryId) VALUES (\"{productName}\", {productPrice}, {assortment.categories[index].getCategoryId()});");
                     Console.WriteLine($"New product {productName} with price {productPrice}zl added! :3");
                     db.syncData(out assortment, out users);
