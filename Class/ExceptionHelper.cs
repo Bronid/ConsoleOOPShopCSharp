@@ -36,7 +36,7 @@ namespace ConsoleOOPShopCSharp.Class
                 try
                 {
                     index = int.Parse(Console.ReadLine());
-                    if (index < 0 || index > p.categories.Count)
+                    if (index <= 0 || index > p.categories.Count)
                     {
                         Console.WriteLine($"There are only {p.categories.Count} categories");
                         index = -1;
@@ -61,7 +61,7 @@ namespace ConsoleOOPShopCSharp.Class
                 try
                 {
                     index = int.Parse(Console.ReadLine());
-                    if (index < 0 || index > p.categories[indexCategory].GetListCount())
+                    if (index <= 0 || index > p.categories[indexCategory].GetListCount())
                     {
                         Console.WriteLine($"There are only {p.categories[indexCategory].GetListCount()} product/s");
                         index = -1;

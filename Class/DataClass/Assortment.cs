@@ -23,9 +23,9 @@ namespace ConsoleOOPShopCSharp.Class.DataClass
             return new CategoryEnum(categories);
         }
 
-        public void Add(Category c) => categories.Add(c);
+        public void Add(Category obj) => categories.Add(obj);
 
-        public void Remove(int index) => categories.RemoveAt(index);
+        public void Remove(Category obj) => categories.Remove(obj);
 
         public void PrintListInfo()
         {

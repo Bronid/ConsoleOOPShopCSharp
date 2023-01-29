@@ -30,9 +30,9 @@ namespace ConsoleOOPShopCSharp.Class.DataClass
 
         new public void ToString() => Console.WriteLine($"Name: {categoryName}");
 
-        public void Add(Product a) => products.Add(a);
+        public void Add(Product obj) => products.Add(obj);
 
-        public void Remove(int id) => products.RemoveAt(id);
+        public void Remove(Product obj) => products.Remove(obj);
         public string getProductNameByIndex(int id) => products[id].GetProductName();
 
         public void PrintListInfo()

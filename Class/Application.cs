@@ -146,67 +146,62 @@ namespace ConsoleOOPShopCSharp.Class
             Console.WriteLine($"Your balance is: {currentUser.GetBalance()}");
             Console.WriteLine("\nOptions: ");
             printLine();
-            Console.WriteLine("1. Buy product");
+            Console.WriteLine("1. Shop");
             printLine();
-            Console.WriteLine("2. Buy product(with filter)");
+            Console.WriteLine("2. Show order history");
             printLine();
-            Console.WriteLine("3. Show order history");
+            Console.WriteLine("3. Logout");
             printLine();
-            Console.WriteLine("4. Logout");
-            printLine();
-            Console.WriteLine("5. Options");
+            Console.WriteLine("4. Options");
             printLine();
             Console.WriteLine("0. EXIT");
             int SelectedNum = e.NumTester();
-            if (SelectedNum < 0 || SelectedNum > 5)
+            if (SelectedNum < 0 || SelectedNum > 4)
             {
                 Console.Clear();
-                Console.WriteLine("Please choose a number from 0 to 5");
+                Console.WriteLine("Please choose a number from 0 to 4");
             }
             switch (SelectedNum)
             {
                 case 0: Console.Clear(); isStart = false; break;
                 case 1:
-                    OrderMenu();
+                    Filter();
                     break;
                 case 2:
-                    OrderMenuFilter();
-                    break;
-                case 3:
                     Console.Clear();
                     currentUser.PrintListInfo();
                     break;
-                case 4:
+                case 3:
                     currentUser = null;
                     isAuthorized = false;
                     Console.Clear();
                     break;
-                case 5:
+                case 4:
                     SettingsMenu();
                     break;
             }
         }
-        private void OrderMenu(bool isSorted = false)
+        private void OrderMenu(Assortment newAsortment)
         {
             Console.Clear();
-            if (assortment.categories.Count <= 0)
+            if (newAsortment.categories.Count <= 0)
             {
                 Console.Clear();
-                Console.WriteLine("We have nothing to show you, first you need to add category!");
+                Console.WriteLine("We have nothing to show you!");
                 return;
             }
-            assortment.PrintListInfo();
+            newAsortment.PrintListInfo();
             Console.WriteLine("What category: ");
-            int indexCategory = e.NumTesterCategories(assortment) - 1;
-            if(assortment.categories[indexCategory].GetListCount() <= 0)
+            int indexCategory = e.NumTesterCategories(newAsortment) - 1;
+            if(newAsortment.categories[indexCategory].GetListCount() <= 0)
             {
                 Console.WriteLine("We have nothing to show you, first you need to add a product!");
                 return;
             }
-            assortment.categories[indexCategory].PrintListInfo();
+            newAsortment.categories[indexCategory].PrintListInfo();
             Console.WriteLine("What product you want to buy: ");
-            int indexProduct = e.NumTesterProducts(assortment, indexCategory) - 1;
-            Product productBuy = assortment.categories[indexCategory].getProductByIndex(indexProduct);
+            int indexProduct = e.NumTesterProducts(newAsortment, indexCategory) - 1;
+            Product productBuy = newAsortment.categories[indexCategory].getProductByIndex(indexProduct);
             Console.WriteLine("Count: ");
             int productCount = e.NumTester();
             if (currentUser.GetBalance() - (productBuy.GetProductPrice() * productCount) >= 0)
@@ -224,97 +219,124 @@ namespace ConsoleOOPShopCSharp.Class
                 Console.WriteLine($"You have not enough money\n");
             }
         }
-
-        private void OrderMenuFilter()
+        private void Filter()
         {
-            Console.Clear();
-            if (assortment.categories.Count <= 0)
+            Assortment sortedAssortment = assortment;
+            while (true)
             {
-                Console.Clear();
-                Console.WriteLine("We have nothing to show you, first you need to add category!");
-                return;
-            }
-            Assortment sortedAssortment = new Assortment();
-            Console.WriteLine("Write first lettes to filter Categories by name(or write 0 to skip): ");
-            string categoryFilter = Console.ReadLine();
-            if (categoryFilter != "0")
-            {
-                foreach (Category category in assortment.categories)
+                if (assortment.categories.Count <= 0)
                 {
-                    if (category.getName().StartsWith(categoryFilter))
-                        sortedAssortment.categories.Add(category);
+                    Console.Clear();
+                    Console.WriteLine("We have nothing to show you, first you need to add category!");
+                    return;
                 }
-            }
-            else sortedAssortment = assortment;
-            sortedAssortment.PrintListInfo();
-            Console.WriteLine("What category: ");
-            int indexCategory = e.NumTesterCategories(assortment) - 1;
-            if (assortment.categories[indexCategory].GetListCount() <= 0)
-            {
-                Console.WriteLine("We have nothing to show you, first you need to add a product!");
-                return;
-            }
-            sortedAssortment.categories[indexCategory].PrintListInfo();
+                Console.WriteLine("\nOptions: ");
+                printLine();
+                Console.WriteLine("1. Filter Categories by name");
+                printLine();
+                Console.WriteLine("2. Filter Products by name");
+                printLine();
+                Console.WriteLine("3. Filter Products by price");
+                printLine();
+                Console.WriteLine("4. Sort Categories by name");
+                printLine();
+                Console.WriteLine("5. Sort Products by name");
+                printLine();
+                Console.WriteLine("6. Sort Products by price");
+                printLine();
+                Console.WriteLine("7. Shop");
+                printLine();
+                Console.WriteLine("0. EXIT");
+                int SelectedNum = e.NumTester();
+                if (SelectedNum < 0 || SelectedNum > 7)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Please choose a number from 0 to 7");
+                }
+                switch (SelectedNum){
+                    case 0: return;
+                    case 7: OrderMenu(sortedAssortment); break;
+                    case 1:
+                        Console.Clear();
+                        Console.WriteLine("Write first lettes to filter Categories by name(or write -1 to return): ");
+                        string categoryFilter = Console.ReadLine();
+                        if (categoryFilter != "-1")
+                        {
+                            Assortment tempAssortment = new Assortment();
+                            foreach (Category category in sortedAssortment.categories)
+                            {
+                                if (category.getName().StartsWith(categoryFilter))
+                                    tempAssortment.categories.Add(category);
+                            }
+                            sortedAssortment = tempAssortment;
+                        }
+                        break;
+                    case 2:
+                        Console.Clear();
+                        Console.WriteLine("Write first lettes to filter Products by name(or write -1 to skip): ");
+                        string productsFilter = Console.ReadLine();
+                        if (productsFilter != "-1")
+                        {
+                            Assortment tempAssortment = new Assortment();
+                            int i = 0;
+                            foreach (Category category in sortedAssortment.categories)
+                            {
+                                foreach(Product product in category)
+                                {
+                                    tempAssortment.categories.Add(category);
+                                    if (product.GetProductName().StartsWith(productsFilter))
+                                    {
+                                        tempAssortment.categories[i].Add(product);
+                                        i++;
+                                    }
+                                }
+                            }
+                            sortedAssortment = tempAssortment;
+                        }
+                        break;
+                    case 3:
+                        Console.Clear();
+                        Console.WriteLine("Write min price to filter Products by price(write -1 to skip): ");
+                        float productsFilterMin = e.NumTester();
+                        if (productsFilterMin >= 0)
+                        {
+                            Assortment tempAssortment = new Assortment();
+                            foreach (Category category in sortedAssortment.categories)
+                            {
+                                Category tempCategory = new Category(category.getName(), category.getCategoryId());
+                                foreach (Product product in category)
+                                {
+                                    if (product.GetProductPrice() >= productsFilterMin)
+                                    {
+                                        tempCategory.Add(product);
+                                    }
+                                }
+                                tempAssortment.Add(tempCategory);
+                            }
+                            sortedAssortment = tempAssortment;
+                        }
 
-            Console.WriteLine("Write first lettes to filter Products by name(or write 0 to skip): ");
-            string productsFilter = Console.ReadLine();
-            if (productsFilter != "0")
-            {
-                Category filtredCategory = new(sortedAssortment.categories[indexCategory].getName(), sortedAssortment.categories[indexCategory].getCategoryId());
-                foreach (Product product in sortedAssortment.categories[indexCategory])
-                {
-                    if (product.GetProductName().StartsWith(productsFilter))
-                        filtredCategory.Add(product);
+                        Console.WriteLine("Write max price to filter Products by price(write -1 to skip): ");
+                        float productsFilterMax = e.NumTester();
+                        if (productsFilterMax >= 0)
+                        {
+                            Assortment tempAssortment = new Assortment();
+                            foreach (Category category in sortedAssortment.categories)
+                            {
+                                Category tempCategory = new Category(category.getName(), category.getCategoryId());
+                                foreach (Product product in category)
+                                {
+                                    if (product.GetProductPrice() <= productsFilterMax)
+                                    {
+                                        tempCategory.Add(product);
+                                    }
+                                }
+                                tempAssortment.Add(tempCategory);
+                            }
+                            sortedAssortment = tempAssortment;
+                        }
+                        break;
                 }
-                sortedAssortment.categories[indexCategory] = filtredCategory;
-            }
-            else sortedAssortment.categories[indexCategory] = assortment.categories[indexCategory];
-            sortedAssortment.categories[indexCategory].PrintListInfo();
-            Console.WriteLine("Write min price to filter Products by price: ");
-            float productsFilterMin = e.NumTester();
-            if (productsFilterMin != 0)
-            {
-                Category filtredCategory = new(sortedAssortment.categories[indexCategory].getName(), sortedAssortment.categories[indexCategory].getCategoryId());
-                foreach (Product product in sortedAssortment.categories[indexCategory])
-                {
-                    if (product.GetProductPrice() >= productsFilterMin)
-                        filtredCategory.Add(product);
-                }
-                sortedAssortment.categories[indexCategory] = filtredCategory;
-            }
-            sortedAssortment.categories[indexCategory].PrintListInfo();
-            Console.WriteLine("Write max price to filter Products by price: ");
-            float productsFilterMax = e.NumTester();
-            if (productsFilterMax != 0)
-            {
-                Category filtredCategory = new(sortedAssortment.categories[indexCategory].getName(), sortedAssortment.categories[indexCategory].getCategoryId());
-                foreach (Product product in sortedAssortment.categories[indexCategory])
-                {
-                    if (product.GetProductPrice() <= productsFilterMax)
-                        filtredCategory.Add(product);
-                }
-                sortedAssortment.categories[indexCategory] = filtredCategory;
-            }
-
-            sortedAssortment.categories[indexCategory].PrintListInfo();
-            Console.WriteLine("What product you want to buy: ");
-            int indexProduct = e.NumTesterProducts(assortment, indexCategory) - 1;
-            Product productBuy = sortedAssortment.categories[indexCategory].getProductByIndex(indexProduct);
-            Console.WriteLine("Count: ");
-            int productCount = e.NumTester();
-            if (currentUser.GetBalance() - (productBuy.GetProductPrice() * productCount) >= 0)
-            {
-                db.executeQuery($"UPDATE Users SET Balance = {currentUser.GetBalance() - (productBuy.GetProductPrice() * productCount)} WHERE Login = \"{currentUser.GetLogin()}\"");
-                DateTime time = DateTime.Now;
-                db.executeQuery($"INSERT INTO Orders(userLogin, productName, productPrice, Count, orderDate)" +
-                    $"VALUES(\"{currentUser.GetLogin()}\", \"{productBuy.GetProductName()}\", {productBuy.GetProductPrice()}, {productCount}, " +
-                    $"\"{time.Year}-{time.Month}-{time.Day} {time.Hour}:{time.Minute}:{time.Second}\")");
-                db.syncData(out assortment, out users);
-                AuthorizeUser(currentUser.GetLogin());
-            }
-            else
-            {
-                Console.WriteLine($"You have not enough money\n");
             }
         }
         private void SettingsMenu()
@@ -351,12 +373,12 @@ namespace ConsoleOOPShopCSharp.Class
                     }
                     assortment.PrintListInfo();
                     Console.WriteLine("Where to add: ");
-                    int index = e.NumTesterCategories(assortment);
+                    int index = e.NumTesterCategories(assortment) - 1;
                     Console.WriteLine("Please write the name of new product");
                     string productName = Console.ReadLine();
                     Console.WriteLine("Please write the price of new product");
                     int productPrice = e.NumTester();
-                    db.executeQuery($"INSERT INTO Products (productName, productPrice, categoryId) VALUES (\"{productName}\", {productPrice}, {assortment.categories[index - 1].getCategoryId()});");
+                    db.executeQuery($"INSERT INTO Products (productName, productPrice, categoryId) VALUES (\"{productName}\", {productPrice}, {assortment.categories[index].getCategoryId()});");
                     Console.WriteLine($"New product {productName} with price {productPrice}zl added! :3");
                     db.syncData(out assortment, out users);
                     break;
@@ -374,17 +396,17 @@ namespace ConsoleOOPShopCSharp.Class
                     Console.Clear();
                     assortment.PrintListInfo();
                     Console.WriteLine("Where to delete: ");
-                    index = e.NumTesterCategories(assortment);
-                    if (assortment.categories[index - 1].GetListCount() <= 0)
+                    index = e.NumTesterCategories(assortment) - 1;
+                    if (assortment.categories[index].GetListCount() <= 0)
                     {
                         Console.WriteLine("We have nothing to delete, first you need to add products!");
                         break;
                     }
-                    assortment.categories[index - 1].PrintListInfo();
+                    assortment.categories[index].PrintListInfo();
                     Console.WriteLine("What to delete: ");
-                    int index2 = e.NumTesterProducts(assortment, index);
-                    db.executeQuery($"DELETE FROM Products WHERE categoryId = {assortment.categories[index - 1].getCategoryId()} AND productName = \"{assortment.categories[index - 1].getProductNameByIndex(index2 - 1)}\"; ");
-                    Console.WriteLine($"Product {assortment.categories[index - 1].getProductNameByIndex(index2 - 1)} removed!");
+                    int index2 = e.NumTesterProducts(assortment, index) - 1;
+                    db.executeQuery($"DELETE FROM Products WHERE categoryId = {assortment.categories[index].getCategoryId()} AND productName = \"{assortment.categories[index].getProductNameByIndex(index2)}\"; ");
+                    Console.WriteLine($"Product {assortment.categories[index].getProductNameByIndex(index2)} removed!");
                     db.syncData(out assortment, out users);
                     break;
                     
@@ -396,10 +418,10 @@ namespace ConsoleOOPShopCSharp.Class
                     }
                     assortment.PrintListInfo();
                     Console.WriteLine("What to delete: ");
-                    index = e.NumTesterCategories(assortment);
-                    db.executeQuery($"DELETE FROM Categories WHERE categoryId = {assortment.categories[index - 1].getCategoryId()};");
-                    db.executeQuery($"DELETE FROM Products WHERE categoryId = {assortment.categories[index - 1].getCategoryId()};");
-                    Console.WriteLine($"Category {assortment.categories[index - 1].getName()} removed!");
+                    index = e.NumTesterCategories(assortment) - 1;
+                    db.executeQuery($"DELETE FROM Categories WHERE categoryId = {assortment.categories[index].getCategoryId()};");
+                    db.executeQuery($"DELETE FROM Products WHERE categoryId = {assortment.categories[index].getCategoryId()};");
+                    Console.WriteLine($"Category {assortment.categories[index].getName()} removed!");
                     db.syncData(out assortment, out users);
                     break;
                     
@@ -412,8 +434,8 @@ namespace ConsoleOOPShopCSharp.Class
                     }
                     assortment.PrintListInfo();
                     Console.WriteLine("What category: ");
-                    index = e.NumTesterCategories(assortment);
-                    assortment.categories[index - 1].PrintListInfo();
+                    index = e.NumTesterCategories(assortment) - 1;
+                    assortment.categories[index].PrintListInfo();
                     break;
                     
                 case 6:
