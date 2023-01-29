@@ -197,10 +197,15 @@ namespace ConsoleOOPShopCSharp.Class
             }
             assortment.PrintListInfo();
             Console.WriteLine("What category: ");
-            int indexCategory = e.NumTesterCategories(assortment.categories.Count) - 1;
+            int indexCategory = e.NumTesterCategories(assortment) - 1;
+            if(assortment.categories[indexCategory].GetListCount() <= 0)
+            {
+                Console.WriteLine("We have nothing to show you, first you need to add a product!");
+                return;
+            }
             assortment.categories[indexCategory].PrintListInfo();
             Console.WriteLine("What product you want to buy: ");
-            int indexProduct = e.NumTester() - 1;
+            int indexProduct = e.NumTesterProducts(assortment, indexCategory) - 1;
             Product productBuy = assortment.categories[indexCategory].getProductByIndex(indexProduct);
             Console.WriteLine("Count: ");
             int productCount = e.NumTester();
@@ -243,7 +248,12 @@ namespace ConsoleOOPShopCSharp.Class
             else sortedAssortment = assortment;
             sortedAssortment.PrintListInfo();
             Console.WriteLine("What category: ");
-            int indexCategory = e.NumTesterCategories(assortment.categories.Count) - 1;
+            int indexCategory = e.NumTesterCategories(assortment) - 1;
+            if (assortment.categories[indexCategory].GetListCount() <= 0)
+            {
+                Console.WriteLine("We have nothing to show you, first you need to add a product!");
+                return;
+            }
             sortedAssortment.categories[indexCategory].PrintListInfo();
 
             Console.WriteLine("Write first lettes to filter Products by name(or write 0 to skip): ");
@@ -288,7 +298,7 @@ namespace ConsoleOOPShopCSharp.Class
 
             sortedAssortment.categories[indexCategory].PrintListInfo();
             Console.WriteLine("What product you want to buy: ");
-            int indexProduct = e.NumTester() - 1;
+            int indexProduct = e.NumTesterProducts(assortment, indexCategory) - 1;
             Product productBuy = sortedAssortment.categories[indexCategory].getProductByIndex(indexProduct);
             Console.WriteLine("Count: ");
             int productCount = e.NumTester();
@@ -341,7 +351,7 @@ namespace ConsoleOOPShopCSharp.Class
                     }
                     assortment.PrintListInfo();
                     Console.WriteLine("Where to add: ");
-                    int index = e.NumTesterCategories(assortment.categories.Count);
+                    int index = e.NumTesterCategories(assortment);
                     Console.WriteLine("Please write the name of new product");
                     string productName = Console.ReadLine();
                     Console.WriteLine("Please write the price of new product");
@@ -364,7 +374,7 @@ namespace ConsoleOOPShopCSharp.Class
                     Console.Clear();
                     assortment.PrintListInfo();
                     Console.WriteLine("Where to delete: ");
-                    index = e.NumTesterCategories(assortment.categories.Count);
+                    index = e.NumTesterCategories(assortment);
                     if (assortment.categories[index - 1].GetListCount() <= 0)
                     {
                         Console.WriteLine("We have nothing to delete, first you need to add products!");
@@ -372,7 +382,7 @@ namespace ConsoleOOPShopCSharp.Class
                     }
                     assortment.categories[index - 1].PrintListInfo();
                     Console.WriteLine("What to delete: ");
-                    int index2 = e.NumTester();
+                    int index2 = e.NumTesterProducts(assortment, index);
                     db.executeQuery($"DELETE FROM Products WHERE categoryId = {assortment.categories[index - 1].getCategoryId()} AND productName = \"{assortment.categories[index - 1].getProductNameByIndex(index2 - 1)}\"; ");
                     Console.WriteLine($"Product {assortment.categories[index - 1].getProductNameByIndex(index2 - 1)} removed!");
                     db.syncData(out assortment, out users);
@@ -386,7 +396,7 @@ namespace ConsoleOOPShopCSharp.Class
                     }
                     assortment.PrintListInfo();
                     Console.WriteLine("What to delete: ");
-                    index = e.NumTesterCategories(assortment.categories.Count);
+                    index = e.NumTesterCategories(assortment);
                     db.executeQuery($"DELETE FROM Categories WHERE categoryId = {assortment.categories[index - 1].getCategoryId()};");
                     db.executeQuery($"DELETE FROM Products WHERE categoryId = {assortment.categories[index - 1].getCategoryId()};");
                     Console.WriteLine($"Category {assortment.categories[index - 1].getName()} removed!");
@@ -402,7 +412,7 @@ namespace ConsoleOOPShopCSharp.Class
                     }
                     assortment.PrintListInfo();
                     Console.WriteLine("What category: ");
-                    index = e.NumTesterCategories(assortment.categories.Count);
+                    index = e.NumTesterCategories(assortment);
                     assortment.categories[index - 1].PrintListInfo();
                     break;
                     
