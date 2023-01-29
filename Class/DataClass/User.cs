@@ -7,27 +7,21 @@ using System.Threading.Tasks;
 
 namespace ConsoleOOPShopCSharp.Class.DataClass
 {
-    public class User
+    public class User : ISpacious<Order>
     {
         private List<Order> orders = new();
 
         private string Name = "";
-        private string Password = "";
         private float Balance = 0;
-        private string Group = "";
         
-
-        public User(string name, string password, float balance, string group)
+        public User(string name, float balance)
         {
             Name = name;
-            Password = password;
             Balance = balance;
-            Group = group;
         }
-
+        public void Add(Order obj) => orders.Add(obj);
         public string GetLogin() { return Name; }
         public float GetBalance() { return Balance; }
-        public List<Order> GetOrders() { return orders; }
         public void PrintListInfo()
         {
             float sum = 0;

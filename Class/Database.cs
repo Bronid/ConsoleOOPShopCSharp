@@ -106,7 +106,7 @@ namespace ConsoleOOPShopCSharp.Class
 
             while (rdr.Read())
             {
-                User temp = new User(rdr.GetString(0), rdr.GetString(1), rdr.GetFloat(2), rdr.GetString(3));
+                User temp = new User(rdr.GetString(0), rdr.GetFloat(2));
                 tempusers.Add(temp);
 
                 string tempstm = $"SELECT * FROM Orders WHERE userLogin = \"{temp.GetLogin()}\"";
@@ -114,14 +114,14 @@ namespace ConsoleOOPShopCSharp.Class
                 SQLiteDataReader temprdr = tempcmd.ExecuteReader();
                 while (temprdr.Read())
                 {
-                    Order temporder = new Order(temprdr.GetString(1), temprdr.GetString(2), temprdr.GetFloat(3), temprdr.GetInt32(4), temprdr.GetString(5));
-                    tempusers[tempusers.IndexOf(temp)].GetOrders().Add(temporder);
+                    Order temporder = new Order(temprdr.GetString(2), temprdr.GetFloat(3), temprdr.GetInt32(4), temprdr.GetString(5));
+                    tempusers[tempusers.IndexOf(temp)].Add(temporder);
                 }
             }
 
             assortment = tempassortment;
             users = tempusers;
-            Console.WriteLine("Data synchronized");
+            //Console.WriteLine("Data synchronized");
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleOOPShopCSharp.Class.DataClass
 {
-    public class Category : ISpacious<Product>, IEnumerable
+    public class Category : ISpacious<Product>, IEnumerable, IComparable
     {
         private string categoryName = "";
         private int categoryId = 0;
@@ -20,7 +20,6 @@ namespace ConsoleOOPShopCSharp.Class.DataClass
             this.categoryName = categoryName;
             this.categoryId = categoryId;
         }
-
         IEnumerator IEnumerable.GetEnumerator() => (IEnumerator)GetEnumerator();
 
         public ProductEnum GetEnumerator()
@@ -28,12 +27,15 @@ namespace ConsoleOOPShopCSharp.Class.DataClass
             return new ProductEnum(products);
         }
 
+        public int CompareTo(object? o)
+        {
+            if (o is Category category) return categoryName.CompareTo(category.categoryName);
+            else throw new ArgumentException("Incorrect object");
+        }
+
         new public void ToString() => Console.WriteLine($"Name: {categoryName}");
 
         public void Add(Product obj) => products.Add(obj);
-
-        public void Remove(Product obj) => products.Remove(obj);
-        public string getProductNameByIndex(int id) => products[id].GetProductName();
 
         public void PrintListInfo()
         {
@@ -45,11 +47,10 @@ namespace ConsoleOOPShopCSharp.Class.DataClass
             }
         }
         public Product getProductByIndex(int index) => products[index];
+
+        public List<Product> getProductList() => products;
         
-        public int GetListCount()
-        {
-            return products.Count;
-        }
+        public int GetListCount() => products.Count;
 
         public string getName() => categoryName;
 

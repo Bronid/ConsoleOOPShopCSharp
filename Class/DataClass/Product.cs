@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleOOPShopCSharp.Class.DataClass
 {
-    public class Product
+    public class Product : IComparable
     {
         private string productName = "";
         private float productPrice = 0;
@@ -17,7 +17,11 @@ namespace ConsoleOOPShopCSharp.Class.DataClass
             this.productPrice = productPrice;
         }
         new public void ToString() => Console.WriteLine($"Name: {productName}  Price: {productPrice}");
-
+        public int CompareTo(object? o)
+        {
+            if (o is Product product) return productPrice.CompareTo(product.productPrice);
+            else throw new ArgumentException("Incorrect object");
+        }
         public string GetProductName() { return productName; }
         public float GetProductPrice() { return productPrice; }
 

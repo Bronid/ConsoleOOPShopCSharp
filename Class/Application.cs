@@ -11,18 +11,18 @@ using System.Reflection;
 
 namespace ConsoleOOPShopCSharp.Class
 {
-    public class Application
+    public static class Application
     {
-        float startUserBalance = 100;
-        ExceptionHelper e = new ExceptionHelper();
+        static float startUserBalance = 100;
+        static ExceptionHelper e = new ExceptionHelper();
         const string connectionString = "Data Source=database.db; Version=3; New=True; Compress=True;";
-        Database db = new Database(connectionString);
-        private bool isStart = false;
-        private bool isAuthorized = false;
-        Assortment assortment = new Assortment();
-        List<User> users = new List<User>();
-        User currentUser = null;
-        public void Start()
+        static Database db = new Database(connectionString);
+        private static bool isStart = false;
+        private static bool isAuthorized = false;
+        static Assortment assortment = new Assortment();
+        static List<User> users = new List<User>();
+        static User currentUser = null;
+        public static void Start()
         {
             isStart = true;
             db.Connect();
@@ -34,11 +34,11 @@ namespace ConsoleOOPShopCSharp.Class
             Console.WriteLine("Welcome to ConsoleShopApplication!");
             LoginMenu();
         }
-        private void printLine()
+        private static void printLine()
         {
             Console.WriteLine("-------------------------------------------");
         }
-        private void Login()
+        private static void Login()
         {
             string login = "";
             string pass = "";
@@ -73,7 +73,7 @@ namespace ConsoleOOPShopCSharp.Class
 
             AuthorizeUser(login);
         }
-        private void Register()
+        private static void Register()
         {
             string login = "";
             string pass = "";
@@ -105,12 +105,12 @@ namespace ConsoleOOPShopCSharp.Class
             db.syncData(out assortment, out users);
             Console.WriteLine("New user added!");
         }
-        private void AuthorizeUser(string login)
+        private static void AuthorizeUser(string login)
         {
             currentUser = users.Find(user => user.GetLogin() == login);
             isAuthorized = true;
         }
-        private void LoginMenu()
+        private static void LoginMenu()
         {
             while (isStart)
             {
@@ -140,7 +140,7 @@ namespace ConsoleOOPShopCSharp.Class
                 else MainMenu();
             }
         }
-        private void MainMenu()
+        private static void MainMenu()
         {
             Console.WriteLine($"Hello, {currentUser.GetLogin()}!");
             Console.WriteLine($"Your balance is: {currentUser.GetBalance()}");
@@ -181,7 +181,7 @@ namespace ConsoleOOPShopCSharp.Class
                     break;
             }
         }
-        private void OrderMenu(Assortment newAsortment)
+        private static void OrderMenu(Assortment newAsortment)
         {
             Console.Clear();
             if (newAsortment.categories.Count <= 0)
@@ -220,7 +220,7 @@ namespace ConsoleOOPShopCSharp.Class
                 Console.WriteLine($"You have not enough money\n");
             }
         }
-        private void Filter()
+        private static void Filter()
         {
             Assortment sortedAssortment = assortment;
             while (true)
@@ -241,22 +241,20 @@ namespace ConsoleOOPShopCSharp.Class
                 printLine();
                 Console.WriteLine("4. Sort Categories by name");
                 printLine();
-                Console.WriteLine("5. Sort Products by name");
+                Console.WriteLine("5. Sort Products by price");
                 printLine();
-                Console.WriteLine("6. Sort Products by price");
-                printLine();
-                Console.WriteLine("7. Shop");
+                Console.WriteLine("6. Shop");
                 printLine();
                 Console.WriteLine("0. EXIT");
                 int SelectedNum = e.NumTester();
-                if (SelectedNum < 0 || SelectedNum > 7)
+                if (SelectedNum < 0 || SelectedNum > 6)
                 {
                     Console.Clear();
                     Console.WriteLine("Please choose a number from 0 to 7");
                 }
                 switch (SelectedNum){
                     case 0: return;
-                    case 7: OrderMenu(sortedAssortment); break;
+                    case 6: OrderMenu(sortedAssortment); break;
                     case 1:
                         Console.Clear();
                         Console.WriteLine("Write first lettes to filter Categories by name(or write 0 to return): ");
@@ -336,12 +334,20 @@ namespace ConsoleOOPShopCSharp.Class
                             }
                             sortedAssortment = tempAssortment;
                         }
-
+                        break;
+                    case 4:
+                        sortedAssortment.categories.Sort();
+                        break;
+                    case 5:
+                        for (int i = 0; i < sortedAssortment.categories.Count; i++)
+                        {
+                            sortedAssortment.categories[i].getProductList().Sort();
+                        }
                         break;
                 }
             }
         }
-        private void SettingsMenu()
+        private static void SettingsMenu()
         {
             Console.WriteLine("\nOptions: ");
             printLine();
@@ -407,8 +413,8 @@ namespace ConsoleOOPShopCSharp.Class
                     assortment.categories[index].PrintListInfo();
                     Console.WriteLine("What to delete: ");
                     int index2 = e.NumTesterProducts(assortment, index) - 1;
-                    db.executeQuery($"DELETE FROM Products WHERE categoryId = {assortment.categories[index].getCategoryId()} AND productName = \"{assortment.categories[index].getProductNameByIndex(index2)}\"; ");
-                    Console.WriteLine($"Product {assortment.categories[index].getProductNameByIndex(index2)} removed!");
+                    db.executeQuery($"DELETE FROM Products WHERE categoryId = {assortment.categories[index].getCategoryId()} AND productName = \"{assortment.categories[index].getProductByIndex(index2).GetProductName()}\"; ");
+                    Console.WriteLine($"Product {assortment.categories[index].getProductByIndex(index2).GetProductName()} removed!");
                     db.syncData(out assortment, out users);
                     break;
                     

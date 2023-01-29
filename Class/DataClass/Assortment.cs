@@ -25,8 +25,6 @@ namespace ConsoleOOPShopCSharp.Class.DataClass
 
         public void Add(Category obj) => categories.Add(obj);
 
-        public void Remove(Category obj) => categories.Remove(obj);
-
         public void PrintListInfo()
         {
             Console.WriteLine("\nAssortment:");
@@ -36,8 +34,6 @@ namespace ConsoleOOPShopCSharp.Class.DataClass
                 categories[i].ToString();
             }
         }
-
-        public Category GetCategory(int index) => categories[index];
 
     }
 }

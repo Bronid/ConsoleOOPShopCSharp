@@ -9,15 +9,13 @@ namespace ConsoleOOPShopCSharp.Class.DataClass
 {
     public class Order
     {
-        private string userLogin = "";
         private string productName = "";
         private float productPrice = 0;
         private int count = 0;
         private string date = "";
 
-        public Order(string userLogin, string productName, float productPrice, int count, string date)
+        public Order(string productName, float productPrice, int count, string date)
         {
-            this.userLogin = userLogin;
             this.productName = productName;
             this.productPrice = productPrice;
             this.count = count;
