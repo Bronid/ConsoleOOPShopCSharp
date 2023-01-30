@@ -337,12 +337,16 @@ namespace ConsoleOOPShopCSharp.Class
                         break;
                     case 4:
                         sortedAssortment.categories.Sort();
+                        Console.Clear();
+                        Console.WriteLine("Sort done!");
                         break;
                     case 5:
                         for (int i = 0; i < sortedAssortment.categories.Count; i++)
                         {
                             sortedAssortment.categories[i].getProductList().Sort();
                         }
+                        Console.Clear();
+                        Console.WriteLine("Sort done!");
                         break;
                 }
             }
