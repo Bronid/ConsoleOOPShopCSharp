@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ConsoleOOPShopCSharp.Class.DataClass;
-using System.Configuration;
-using System.Reflection;
+﻿using ConsoleOOPShopCSharp.Class.DataClass;
 
 namespace ConsoleOOPShopCSharp.Class
 {
@@ -177,6 +168,7 @@ namespace ConsoleOOPShopCSharp.Class
                     Console.Clear();
                     break;
                 case 4:
+                    Console.Clear();
                     SettingsMenu();
                     break;
             }
@@ -353,6 +345,7 @@ namespace ConsoleOOPShopCSharp.Class
         }
         private static void SettingsMenu()
         {
+            while (true) {
             Console.WriteLine("\nOptions: ");
             printLine();
             Console.WriteLine("1. Add Product");
@@ -371,97 +364,98 @@ namespace ConsoleOOPShopCSharp.Class
             Console.WriteLine("Please choose a number:");
             int SelectedNum = e.NumTester();
             if (SelectedNum < 0 || SelectedNum > 6) Console.WriteLine("Please choose a number from 0 to 6");
-            switch (SelectedNum)
-            {
+                switch (SelectedNum)
+                {
 
-                case 0: Console.Clear(); isStart = false; break;
-                
-                case 1:
-                    Console.Clear();
-                    if (assortment.categories.Count <= 0)
-                    {
-                        Console.WriteLine("First you need to add category!");
-                        break;
-                    }
-                    assortment.PrintListInfo();
-                    Console.WriteLine("Where to add: ");
-                    int index = e.NumTesterCategories(assortment) - 1;
-                    Console.WriteLine("Please write the name of new product");
-                    string productName = Console.ReadLine();
-                    Console.WriteLine("Please write the price of new product");
-                    int productPrice = e.NumTesterPrice();
-                    db.executeQuery($"INSERT INTO Products (productName, productPrice, categoryId) VALUES (\"{productName}\", {productPrice}, {assortment.categories[index].getCategoryId()});");
-                    Console.WriteLine($"New product {productName} with price {productPrice}zl added! :3");
-                    db.syncData(out assortment, out users);
-                    break;
+                    case 0: Console.Clear(); return;
 
-                case 2:
-                    Console.Clear();
-                    Console.WriteLine("Please write the name of new category");
-                    string categoryName = Console.ReadLine();
-                    db.executeQuery($"INSERT INTO Categories (categoryName) VALUES (\"{categoryName}\");");
-                    Console.WriteLine($"New category {categoryName} added! :3");
-                    db.syncData(out assortment, out users);
-                    break;
-                    
-                case 3:
-                    Console.Clear();
-                    assortment.PrintListInfo();
-                    Console.WriteLine("Where to delete: ");
-                    index = e.NumTesterCategories(assortment) - 1;
-                    if (assortment.categories[index].GetListCount() <= 0)
-                    {
-                        Console.WriteLine("We have nothing to delete, first you need to add products!");
-                        break;
-                    }
-                    assortment.categories[index].PrintListInfo();
-                    Console.WriteLine("What to delete: ");
-                    int index2 = e.NumTesterProducts(assortment, index) - 1;
-                    db.executeQuery($"DELETE FROM Products WHERE categoryId = {assortment.categories[index].getCategoryId()} AND productName = \"{assortment.categories[index].getProductByIndex(index2).GetProductName()}\"; ");
-                    Console.WriteLine($"Product {assortment.categories[index].getProductByIndex(index2).GetProductName()} removed!");
-                    db.syncData(out assortment, out users);
-                    break;
-                    
-                case 4:
-                    Console.Clear();
-                    if (assortment.categories.Count <= 0)
-                    {
-                        Console.WriteLine("We have nothing to delete, first you need to add category!");
-                    }
-                    assortment.PrintListInfo();
-                    Console.WriteLine("What to delete: ");
-                    index = e.NumTesterCategories(assortment) - 1;
-                    db.executeQuery($"DELETE FROM Categories WHERE categoryId = {assortment.categories[index].getCategoryId()};");
-                    db.executeQuery($"DELETE FROM Products WHERE categoryId = {assortment.categories[index].getCategoryId()};");
-                    Console.WriteLine($"Category {assortment.categories[index].getName()} removed!");
-                    db.syncData(out assortment, out users);
-                    break;
-                    
-                case 5:
-                    Console.Clear();
-                    if (assortment.categories.Count <= 0)
-                    {
-                        Console.WriteLine("We have nothing to show you, first you need to add category!");
-                        break;
-                    }
-                    assortment.PrintListInfo();
-                    Console.WriteLine("What category: ");
-                    index = e.NumTesterCategories(assortment) - 1;
-                    assortment.categories[index].PrintListInfo();
-                    break;
-                    
-                case 6:
-                    Console.Clear();
-                    if (assortment.categories.Count <= 0)
-                    {
-                        Console.WriteLine("We have nothing to show you, first you need to add category!");
-                        break;
-                    }
-                    else
-                    {
+                    case 1:
+                        Console.Clear();
+                        if (assortment.categories.Count <= 0)
+                        {
+                            Console.WriteLine("First you need to add category!");
+                            break;
+                        }
                         assortment.PrintListInfo();
-                    }
-                    break;
+                        Console.WriteLine("Where to add: ");
+                        int index = e.NumTesterCategories(assortment) - 1;
+                        Console.WriteLine("Please write the name of new product");
+                        string productName = Console.ReadLine();
+                        Console.WriteLine("Please write the price of new product");
+                        int productPrice = e.NumTesterPrice();
+                        db.executeQuery($"INSERT INTO Products (productName, productPrice, categoryId) VALUES (\"{productName}\", {productPrice}, {assortment.categories[index].getCategoryId()});");
+                        Console.WriteLine($"New product {productName} with price {productPrice}zl added! :3");
+                        db.syncData(out assortment, out users);
+                        break;
+
+                    case 2:
+                        Console.Clear();
+                        Console.WriteLine("Please write the name of new category");
+                        string categoryName = Console.ReadLine();
+                        db.executeQuery($"INSERT INTO Categories (categoryName) VALUES (\"{categoryName}\");");
+                        Console.WriteLine($"New category {categoryName} added! :3");
+                        db.syncData(out assortment, out users);
+                        break;
+
+                    case 3:
+                        Console.Clear();
+                        assortment.PrintListInfo();
+                        Console.WriteLine("Where to delete: ");
+                        index = e.NumTesterCategories(assortment) - 1;
+                        if (assortment.categories[index].GetListCount() <= 0)
+                        {
+                            Console.WriteLine("We have nothing to delete, first you need to add products!");
+                            break;
+                        }
+                        assortment.categories[index].PrintListInfo();
+                        Console.WriteLine("What to delete: ");
+                        int index2 = e.NumTesterProducts(assortment, index) - 1;
+                        db.executeQuery($"DELETE FROM Products WHERE categoryId = {assortment.categories[index].getCategoryId()} AND productName = \"{assortment.categories[index].getProductByIndex(index2).GetProductName()}\"; ");
+                        Console.WriteLine($"Product {assortment.categories[index].getProductByIndex(index2).GetProductName()} removed!");
+                        db.syncData(out assortment, out users);
+                        break;
+
+                    case 4:
+                        Console.Clear();
+                        if (assortment.categories.Count <= 0)
+                        {
+                            Console.WriteLine("We have nothing to delete, first you need to add category!");
+                        }
+                        assortment.PrintListInfo();
+                        Console.WriteLine("What to delete: ");
+                        index = e.NumTesterCategories(assortment) - 1;
+                        db.executeQuery($"DELETE FROM Categories WHERE categoryId = {assortment.categories[index].getCategoryId()};");
+                        db.executeQuery($"DELETE FROM Products WHERE categoryId = {assortment.categories[index].getCategoryId()};");
+                        Console.WriteLine($"Category {assortment.categories[index].getName()} removed!");
+                        db.syncData(out assortment, out users);
+                        break;
+
+                    case 5:
+                        Console.Clear();
+                        if (assortment.categories.Count <= 0)
+                        {
+                            Console.WriteLine("We have nothing to show you, first you need to add category!");
+                            break;
+                        }
+                        assortment.PrintListInfo();
+                        Console.WriteLine("What category: ");
+                        index = e.NumTesterCategories(assortment) - 1;
+                        assortment.categories[index].PrintListInfo();
+                        break;
+
+                    case 6:
+                        Console.Clear();
+                        if (assortment.categories.Count <= 0)
+                        {
+                            Console.WriteLine("We have nothing to show you, first you need to add category!");
+                            break;
+                        }
+                        else
+                        {
+                            assortment.PrintListInfo();
+                        }
+                        break;
+                }
             }
         }
     }

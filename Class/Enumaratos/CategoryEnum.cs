@@ -8,13 +8,10 @@ using System.Threading.Tasks;
 
 namespace ConsoleOOPShopCSharp.Class.Enumaratos
 {
-    // When you implement IEnumerable, you must also implement IEnumerator.
     public class CategoryEnum : IEnumerator
     {
         private List<Category> categories;
 
-        // Enumerators are positioned before the first element
-        // until the first MoveNext() call.
         int position = -1;
 
         public CategoryEnum(List<Category> categories)
