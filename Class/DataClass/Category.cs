@@ -1,11 +1,6 @@
 using ConsoleOOPShopCSharp.Class.Enumaratos;
 using ConsoleOOPShopCSharp.Class.Interface;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleOOPShopCSharp.Class.DataClass
 {
