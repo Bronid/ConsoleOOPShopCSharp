@@ -35,12 +35,12 @@ Design and implement an object-oriented shop management system. The basic assump
 I create application which contains:
 1. Objects:
    * [Product](https://github.com/Bronid/ConsoleOOPShopCSharp/blob/master/Class/DataClass/Product.cs) (describes the single product in the shop)
-   * [Category](https://github.com/Bronid/ConsoleOOPShopCSharp/blob/master/Class/DataClass/Category.cs)(contains list of products)
-   * [Assortment](https://github.com/Bronid/ConsoleOOPShopCSharp/blob/master/Class/DataClass/Assortment.cs)(contains list of categories)
-   * [Order](https://github.com/Bronid/ConsoleOOPShopCSharp/blob/master/Class/DataClass/Order.cs)(describes a single user's order)
-   * [User](https://github.com/Bronid/ConsoleOOPShopCSharp/blob/master/Class/DataClass/User.cs)(contains list of orders)
-   * [Application](https://github.com/Bronid/ConsoleOOPShopCSharp/blob/master/Class/Application.cs)(static class)
-   * [Database](https://github.com/Bronid/ConsoleOOPShopCSharp/blob/master/Class/Database.cs)(class with database functionality)
+   * [Category](https://github.com/Bronid/ConsoleOOPShopCSharp/blob/master/Class/DataClass/Category.cs) (contains list of products)
+   * [Assortment](https://github.com/Bronid/ConsoleOOPShopCSharp/blob/master/Class/DataClass/Assortment.cs) (contains list of categories)
+   * [Order](https://github.com/Bronid/ConsoleOOPShopCSharp/blob/master/Class/DataClass/Order.cs) (describes a single user's order)
+   * [User](https://github.com/Bronid/ConsoleOOPShopCSharp/blob/master/Class/DataClass/User.cs) (contains list of orders)
+   * [Application](https://github.com/Bronid/ConsoleOOPShopCSharp/blob/master/Class/Application.cs) (static class)
+   * [Database](https://github.com/Bronid/ConsoleOOPShopCSharp/blob/master/Class/Database.cs) (class with database functionality)
    * [ExceptionHelper](https://github.com/Bronid/ConsoleOOPShopCSharp/blob/master/Class/ExceptionHelper.cs) (controls user incorrect input)
 
 2. Functionality:
@@ -78,5 +78,5 @@ I create application which contains:
 ```
 git clone https://github.com/Bronid/ConsoleOOPShopCSharp.git
 ```
-2. Run [Program.cs](https://github.com/Bronid/ConsoleOOPShopCSharp/blob/master/Program.cs)file via your IDE
+2. Run [Program.cs](https://github.com/Bronid/ConsoleOOPShopCSharp/blob/master/Program.cs) file via your IDE
 3. Done =)
